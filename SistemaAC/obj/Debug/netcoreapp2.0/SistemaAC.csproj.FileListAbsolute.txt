@@ -1,0 +1,12 @@
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\bin\Debug\netcoreapp2.0\SistemaAC.deps.json
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\bin\Debug\netcoreapp2.0\SistemaAC.runtimeconfig.json
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\bin\Debug\netcoreapp2.0\SistemaAC.runtimeconfig.dev.json
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\bin\Debug\netcoreapp2.0\SistemaAC.dll
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\bin\Debug\netcoreapp2.0\SistemaAC.pdb
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.csprojAssemblyReference.cache
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.csproj.CoreCompileInputs.cache
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\UserSecretsAssemblyInfo.cs
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.AssemblyInfoInputs.cache
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.AssemblyInfo.cs
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.dll
+E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.pdb
