@@ -10,3 +10,5 @@ E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0
 E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.AssemblyInfo.cs
 E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.dll
 E:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.pdb
+D:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.dll
+D:\Ing. del software\Proyecto\Codigo\SistemaAC\SistemaAC\obj\Debug\netcoreapp2.0\SistemaAC.pdb

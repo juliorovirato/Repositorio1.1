@@ -7,142 +7,191 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaAC.Data;
 using SistemaAC.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SistemaAC.Controllers
 {
     public class UsuariosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        UserManager<ApplicationUser> _userManager;
+        RoleManager<IdentityRole> _roleManager;
+        UsuarioRole _usuarioRole;
+        public List<SelectListItem> usuarioRole;
 
-        public UsuariosController(ApplicationDbContext context)
+        public UsuariosController(ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _usuarioRole = new UsuarioRole();
+            usuarioRole = new List<SelectListItem>();
         }
 
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ApplicationUser.ToListAsync());
-        }
-
-        // GET: Usuarios/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null)
+            var ID = "";
+            List<Usuario> usuario = new List<Usuario>();
+            var appUsuario = await _context.ApplicationUser.ToListAsync();
+            foreach (var Data in appUsuario)
             {
-                return NotFound();
+                ID = Data.Id;
+                usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, ID);
+
+                usuario.Add(new Usuario()
+                {
+                    Id = Data.Id,
+                    UserName = Data.UserName,
+                    PhoneNumber = Data.PhoneNumber,
+                    Email = Data.Email,
+                    Role = usuarioRole[0].Text
+
+                });
             }
-
-            var applicationUser = await _context.ApplicationUser
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationUser);
+            return View(usuario.ToList());
+            //return View(await _context.ApplicationUser.ToListAsync());
         }
 
-        // GET: Usuarios/Create
-        public IActionResult Create()
+        public async Task<List<Usuario>> GetUsuario(string id)
         {
-            return View();
+            List<Usuario> usuario = new List<Usuario>();
+            var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+            usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, id);
+
+            usuario.Add(new Usuario()
+            {
+                Id = appUsuario.Id,
+                UserName = appUsuario.UserName,
+                PhoneNumber = appUsuario.PhoneNumber,
+                Email = appUsuario.Email,
+                Role = usuarioRole[0].Text,
+                RoleId = usuarioRole[0].Value,
+                AccessFailedCount = appUsuario.AccessFailedCount,
+                ConcurrencyStamp = appUsuario.ConcurrencyStamp,
+                EmailConfirmed = appUsuario.EmailConfirmed,
+                LockoutEnabled = appUsuario.LockoutEnabled,
+                LockoutEnd = appUsuario.LockoutEnd,
+                NormalizedEmail = appUsuario.NormalizedEmail,
+                NormalizedUserName = appUsuario.NormalizedUserName,
+                PasswordHash = appUsuario.PasswordHash,
+                PhoneNumberConfirmed = appUsuario.PhoneNumberConfirmed,
+                SecurityStamp = appUsuario.SecurityStamp,
+                TwoFactorEnabled = appUsuario.TwoFactorEnabled
+
+            });
+            return usuario;
         }
 
-        // POST: Usuarios/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
+        public async Task<List<SelectListItem>> GetRoles()
         {
-            if (ModelState.IsValid)
+            List<SelectListItem> rolesLista = new List<SelectListItem>();
+
+            rolesLista = _usuarioRole.Roles(_roleManager);
+
+            return rolesLista;
+        }
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<string> EditUsuario(string id, string userName, string email,
+            string phoneNumber, int accessFailedCount, string concurrencyStamp, bool emailConfirmed,
+            bool lockoutEnabled, DateTimeOffset lockoutEnd, string normalizedEmail, string normalizedUserName,
+            string passwordHash, bool phoneNumberConfirmed, string securityStamp, bool twoFactorEnabled,
+            string selectRole, ApplicationUser applicationUser)
+        {
+            var resp = "";
+            try
             {
-                _context.Add(applicationUser);
+                applicationUser = new ApplicationUser
+                {
+                    Id = id,
+                    UserName = userName,
+                    Email = email,
+                    PhoneNumber = phoneNumber,
+                    EmailConfirmed = emailConfirmed,
+                    LockoutEnabled = lockoutEnabled,
+                    LockoutEnd = lockoutEnd,
+                    NormalizedEmail = normalizedEmail,
+                    NormalizedUserName = normalizedUserName,
+                    PasswordHash = passwordHash,
+                    PhoneNumberConfirmed = phoneNumberConfirmed,
+                    SecurityStamp = securityStamp,
+                    TwoFactorEnabled = twoFactorEnabled,
+                    AccessFailedCount = accessFailedCount,
+                    ConcurrencyStamp = concurrencyStamp
+                };
+                //Actualizamos los datos
+                _context.Update(applicationUser);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(applicationUser);
-        }
 
-        // GET: Usuarios/Edit/5
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+                var usuario = await _userManager.FindByIdAsync(id);
 
-            var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-            return View(applicationUser);
-        }
+                usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, id);
 
-        // POST: Usuarios/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser applicationUser)
-        {
-            if (id != applicationUser.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
+                if (usuarioRole[0].Text != "No Role")
                 {
-                    _context.Update(applicationUser);
-                    await _context.SaveChangesAsync();
+                    await _userManager.RemoveFromRoleAsync(usuario, usuarioRole[0].Text);
                 }
-                catch (DbUpdateConcurrencyException)
+
+                if (selectRole == "No Role")
                 {
-                    if (!ApplicationUserExists(applicationUser.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    selectRole = "Beneficiario";
                 }
-                return RedirectToAction(nameof(Index));
+
+                var resultado = await _userManager.AddToRoleAsync(usuario, selectRole);
+
+                resp = "Save";
             }
-            return View(applicationUser);
+            catch
+            {
+                resp = "NoSave";
+            }
+            return resp;
         }
 
-        // GET: Usuarios/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        [Authorize(Roles = "Administrador")]
+        public async Task<String> DeleteUsuario(string id)
         {
-            if (id == null)
+            var resp = "";
+            try
             {
-                return NotFound();
+                var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+                _context.ApplicationUser.Remove(applicationUser);
+                await _context.SaveChangesAsync();
+                resp = "Delete";
             }
-
-            var applicationUser = await _context.ApplicationUser
-                .SingleOrDefaultAsync(m => m.Id == id);
-            if (applicationUser == null)
+            catch
             {
-                return NotFound();
+                resp = "NoDelete";
             }
-
-            return View(applicationUser);
+            return resp;
         }
 
-        // POST: Usuarios/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        [Authorize(Roles = "Administrador")]
+        public async Task<String> CreateUsuario(string email,
+                string phoneNumber, string passwordHash, string selectRole, ApplicationUser applicationUser)
         {
-            var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            _context.ApplicationUser.Remove(applicationUser);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            var resp = "";
+            applicationUser = new ApplicationUser
+            {
+                UserName = email,
+                Email = email,
+                PhoneNumber = phoneNumber
+            };
+            var result = await _userManager.CreateAsync(applicationUser, passwordHash);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(applicationUser, selectRole);
+                resp = "Save";
+            }
+            else
+            {
+                resp = "NoSave";
+            }
+            return resp;
         }
 
         private bool ApplicationUserExists(string id)
