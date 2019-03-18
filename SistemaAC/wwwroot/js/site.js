@@ -2,6 +2,9 @@
 $('#modalEditar').on('shown.bs.modal', function () {
   $('#myInput').focus()
 })
+$('#modalAC').on('shown.bs.modal', function () {
+    $('#Nombre').focus()
+})
 
 function getUsuario(id,action) {
     $.ajax({
@@ -171,4 +174,16 @@ function crearUsuario(action) {
             });
         }
     }
+}
+
+var agregarActividad = () => {
+    var nombre = document.getElementById("Nombre").value;
+    var cantidad = document.getElementById("Cantidad").value;
+    var descripcion = document.getElementById("Descripcion").value;
+    var estados = document.getElementById('Estado');
+    var estado = estados.options[estados.selectedIndex].value;
+    var codinstructor = document.getElementById("Codigo").value;
+    var action = 'Actividades/guardarActividad';
+    var actividad = new Actividades(nombre, cantidad, descripcion, estado, codinstructor, action);
+    actividad.agregarActividad();
 }

@@ -1,0 +1,115 @@
+﻿@model IEnumerable<SistemaAC.Models.Actividades>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a data-toggle="modal" data-target="#modalAC" class="btn btn-info">Agregar Actividad</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre Actividad
+            </th>
+            <th>
+                Cantidad Inscritos
+            </th>
+            <th>
+                Descripcion
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Codigo Instructor
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    Nombre Actividad
+                </td>
+                <td>
+                    Cantidad Inscritos
+                </td>
+                <td>
+                    Descripcion
+                </td>
+                <td>
+                    Estado
+                </td>
+                <td>
+                    Codigo Instructor
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ActividadID">Editar</a> |
+                    <a asp-action="Details" asp-route-id="@item.ActividadID">Detalles</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ActividadID">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="modalAC" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-tittle" id="myModalLabel">Agregar Actividad</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="Nombre" class="col-md-2 control-label">Nombre Actividad</label>
+                            <div class="col-md-10">
+                                <input for="Nombre" id="Nombre" placeholder="Nombre" name="Nombre" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Cantidad" class="col-md-2 control-label">Cantidad Inscritos</label>
+                            <div class="col-md-10">
+                                <input for="Cantidad" id="Cantidad" placeholder="Cantidad" name="Cantidad" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Descripcion" class="col-md-2 control-label">Descripción</label>
+                            <div class="col-md-10">
+                                <input for="Descripcion" id="Descripcion" placeholder="Descripcion" name="Descripcion" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Estado" class="col-md-2 control-label">Estado</label>
+                            <div class="col-md-10">
+                                <select id="Estado" class="from-control">
+                                    <option value='0'>Seleccione un estado</option>
+                                    <option value='true'>Activa</option>
+                                    <option value='false'>No Activa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Codigo" class="col-md-2 control-label">Codigo Instructor</label>
+                            <div class="col-md-10">
+                                <input for="Codigo" id="Codigo" placeholder="Codigo" name="Codigo" class="form-control" />
+                            </div>
+                        </div>
+                        <label id="mensaje" class="col-md-2 control-label"></label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" onclick="agregarActividad()" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
