@@ -29,6 +29,15 @@ namespace SistemaAC.Controllers
             return View(await _context.Actividades.ToListAsync());
         }
 
+        public List<object[]> filtrarDatos(int numPagina, string valor)
+        {
+            return actividadesModels.filtrarDatos(numPagina, valor);
+        }
+        public List<Actividades> getActividades(int id)
+        {
+            return actividadesModels.getActividades(id);
+        }
+
         // GET: Actividades/Details/5
         public async Task<IActionResult> Details(int? id)
         {

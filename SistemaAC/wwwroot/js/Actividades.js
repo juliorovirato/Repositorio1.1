@@ -1,4 +1,5 @@
-﻿class Actividades {
+﻿var localStorage = window.localStorage;
+class Actividades {
     constructor(nombre, cantidad, descripcion, estado, codinstructor, action) {
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -71,6 +72,18 @@
                 });
             }
         });
+    }
+    getActividades(id) {
+        var action = this.action;
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { id },
+            success: (response) => {
+                console.log(response);
+                localStorage.setItem("actividades", JSON.stringify(response));
+            }
+        })
     }
     restablecer() {
         document.getElementById("Nombre").value = "";

@@ -176,6 +176,11 @@ function crearUsuario(action) {
     }
 }
 
+$().ready(() => {
+    document.getElementById("filtrar").focus();
+    filtrarDatos(1);
+});
+var idActividades;
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
     var cantidad = document.getElementById("Cantidad").value;
@@ -189,7 +194,13 @@ var agregarActividad = () => {
 }
 var filtrarDatos = (numPagina) => {
     var valor = document.getElementById("filtrar").value;
-    var action = 'Categorias/filtrarDatos';
+    var action = 'Actividades/filtrarDatos';
     var actividad = new Actividades(valor, "", "", "", "", action);
     actividad.filtrarDatos(numPagina);
+}
+var editarEstado = (id) => {
+    idActividades = id;
+    var action = 'Actividades/getActividades';
+    var actividades = new Actividades("", "", "", "", "", action);
+    actividades.getActividades(id);
 }
