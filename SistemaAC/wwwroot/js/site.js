@@ -187,3 +187,9 @@ var agregarActividad = () => {
     var actividad = new Actividades(nombre, cantidad, descripcion, estado, codinstructor, action);
     actividad.agregarActividad();
 }
+var filtrarDatos = (numPagina) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Categorias/filtrarDatos';
+    var actividad = new Actividades(valor, "", "", "", "", action);
+    actividad.filtrarDatos(numPagina);
+}

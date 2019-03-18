@@ -1,14 +1,19 @@
 ﻿@model IEnumerable<SistemaAC.Models.Actividades>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Actividades";
 }
 
-<h2>Index</h2>
+<h2>Actividades</h2>
 
 <p>
     <a data-toggle="modal" data-target="#modalAC" class="btn btn-info">Agregar Actividad</a>
 </p>
+<div class="form-group">
+    <div class="col-md-10">
+        <input id="filtrar" name="filtrar" placeholder="Buscar" onkeyup="filtrarDatos(1);" class="form-control" />
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
@@ -35,19 +40,19 @@
         {
             <tr>
                 <td>
-                    Nombre Actividad
+                    @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
                 <td>
-                    Cantidad Inscritos
+                    @Html.DisplayFor(modelItem => item.CantidadIns)
                 </td>
                 <td>
-                    Descripcion
+                    @Html.DisplayFor(modelItem => item.Descripcion)
                 </td>
                 <td>
-                    Estado
+                    @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    Codigo Instructor
+                    @Html.DisplayFor(modelItem => item.InstructorCod)
                 </td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ActividadID">Editar</a> |

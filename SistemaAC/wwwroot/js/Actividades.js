@@ -37,7 +37,14 @@
                                     nombre, cantidad, descripcion, estado, codinstructor
                                 },
                                 success: (response) => {
-                                    console.log(response);
+                                    $.each(response, (index, val) => {
+                                        mensaje = val.code;
+                                    });
+                                    if (mensaje == "Save") {
+                                        this.restablecer();
+                                    } else {
+                                        document.getElementById("mensaje").innerHTML = "No se puede guardar la categoria";
+                                    }
                                 }
                             });
                         }
@@ -45,5 +52,33 @@
                 }
             }
         }
+    }
+    filtrarDatos(numPagina) {
+        var valor = this.nombre;
+        var action = this.action;
+        if (valor == "") {
+            valor = "null";
+        }
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { valor, numPagina },
+            success: (response) => {
+                console.log(response);
+                $.each(response, (index, val) => {
+                    $("#resultSearch").html(val[0]);
+                    $("#Paginado").html(val[1]);
+                });
+            }
+        });
+    }
+    restablecer() {
+        document.getElementById("Nombre").value = "";
+        document.getElementById("Cantidad").value = "";
+        document.getElementById("Descripcion").value = "";
+        document.getElementById("mensaje").innerHTML = "";
+        document.getElementById("Estado").selectedIndex = 0;
+        document.getElementById("Codigo").value = "";
+        $('#modalAC').modal('hide');  
     }
 }
