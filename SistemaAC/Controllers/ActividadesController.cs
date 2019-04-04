@@ -16,7 +16,6 @@ namespace SistemaAC.Controllers
     {
         private readonly ApplicationDbContext _context;
         private ActividadesModels actividadesModels;
-
         public ActividadesController(ApplicationDbContext context)
         {
             _context = context;
@@ -28,16 +27,14 @@ namespace SistemaAC.Controllers
         {
             return View(await _context.Actividades.ToListAsync());
         }
-
         public List<object[]> filtrarDatos(int numPagina, string valor)
         {
             return actividadesModels.filtrarDatos(numPagina, valor);
         }
-        public List<Actividades> getActividades(int id)
+        public List<Actividades> getActividad(int id)
         {
-            return actividadesModels.getActividades(id);
+            return actividadesModels.getActividad(id);
         }
-
         // GET: Actividades/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -47,7 +44,7 @@ namespace SistemaAC.Controllers
             }
 
             var actividades = await _context.Actividades
-                .SingleOrDefaultAsync(m => m.ActividadID == id);
+                .SingleOrDefaultAsync(m => m.ActividadesID == id);
             if (actividades == null)
             {
                 return NotFound();
@@ -55,9 +52,9 @@ namespace SistemaAC.Controllers
 
             return View(actividades);
         }
-        public List<IdentityError> guardarActividad(string nombre, string cantidad, string descripcion, int codinstructor, string estado)
+        public List<IdentityError> guardarActividad(string nombre, string cantidadIns, string descripcion, string estado)
         {
-            return actividadesModels.guardarActividad(nombre, cantidad, descripcion, estado, codinstructor);
+            return actividadesModels.guardarActividad(nombre, cantidadIns, descripcion, estado);
         }
 
         // GET: Actividades/Edit/5
@@ -68,7 +65,7 @@ namespace SistemaAC.Controllers
                 return NotFound();
             }
 
-            var actividades = await _context.Actividades.SingleOrDefaultAsync(m => m.ActividadID == id);
+            var actividades = await _context.Actividades.SingleOrDefaultAsync(m => m.ActividadesID == id);
             if (actividades == null)
             {
                 return NotFound();
@@ -81,9 +78,9 @@ namespace SistemaAC.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ActividadID,Nombre,CantidadIns,Descripcion,Estado,InstructorCod")] Actividades actividades)
+        public async Task<IActionResult> Edit(int id, [Bind("ActividadesID,NombreAct,CantidadIns,Descripcion,Estado")] Actividades actividades)
         {
-            if (id != actividades.ActividadID)
+            if (id != actividades.ActividadesID)
             {
                 return NotFound();
             }
@@ -97,7 +94,7 @@ namespace SistemaAC.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActividadesExists(actividades.ActividadID))
+                    if (!ActividadesExists(actividades.ActividadesID))
                     {
                         return NotFound();
                     }
@@ -120,7 +117,7 @@ namespace SistemaAC.Controllers
             }
 
             var actividades = await _context.Actividades
-                .SingleOrDefaultAsync(m => m.ActividadID == id);
+                .SingleOrDefaultAsync(m => m.ActividadesID == id);
             if (actividades == null)
             {
                 return NotFound();
@@ -134,7 +131,7 @@ namespace SistemaAC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var actividades = await _context.Actividades.SingleOrDefaultAsync(m => m.ActividadID == id);
+            var actividades = await _context.Actividades.SingleOrDefaultAsync(m => m.ActividadesID == id);
             _context.Actividades.Remove(actividades);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -142,7 +139,7 @@ namespace SistemaAC.Controllers
 
         private bool ActividadesExists(int id)
         {
-            return _context.Actividades.Any(e => e.ActividadID == id);
+            return _context.Actividades.Any(e => e.ActividadesID == id);
         }
     }
 }

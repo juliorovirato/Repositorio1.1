@@ -130,7 +130,7 @@ namespace SistemaAC.Data.Migrations
 
             modelBuilder.Entity("SistemaAC.Models.Actividades", b =>
                 {
-                    b.Property<int>("ActividadID")
+                    b.Property<int>("ActividadesID")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("CantidadIns");
@@ -139,11 +139,9 @@ namespace SistemaAC.Data.Migrations
 
                     b.Property<bool>("Estado");
 
-                    b.Property<int>("InstructorCod");
+                    b.Property<string>("NombreAct");
 
-                    b.Property<string>("Nombre");
-
-                    b.HasKey("ActividadID");
+                    b.HasKey("ActividadesID");
 
                     b.ToTable("Actividades");
                 });
@@ -199,66 +197,62 @@ namespace SistemaAC.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("SistemaAC.Models.Instructor", b =>
+            modelBuilder.Entity("SistemaAC.Models.Horario", b =>
                 {
-                    b.Property<int>("InstructorID")
+                    b.Property<int>("HorarioID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("ActividadesActividadID");
+                    b.Property<int>("ActividadesID");
 
-                    b.Property<string>("CedulaIns");
+                    b.Property<byte>("DiaAct");
 
-                    b.HasKey("InstructorID");
+                    b.Property<byte>("HoraAct");
 
-                    b.HasIndex("ActividadesActividadID");
+                    b.HasKey("HorarioID");
 
-                    b.ToTable("Instructor");
+                    b.HasIndex("ActividadesID");
+
+                    b.ToTable("Horario");
                 });
 
-            modelBuilder.Entity("SistemaAC.Models.Usuario", b =>
+            modelBuilder.Entity("SistemaAC.Models.Maquinaria", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("MaquinariaID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AccessFailedCount");
+                    b.Property<int>("ActividadesID");
 
-                    b.Property<string>("ConcurrencyStamp");
+                    b.Property<string>("Cantidad");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("NombreMaq");
 
-                    b.Property<bool>("EmailConfirmed");
+                    b.HasKey("MaquinariaID");
 
-                    b.Property<int?>("InstructorID");
+                    b.HasIndex("ActividadesID");
 
-                    b.Property<bool>("LockoutEnabled");
+                    b.ToTable("Maquinaria");
+                });
 
-                    b.Property<DateTimeOffset?>("LockoutEnd");
+            modelBuilder.Entity("SistemaAC.Models.Tarifas", b =>
+                {
+                    b.Property<int>("TarifaID")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("NormalizedEmail");
+                    b.Property<int>("ActividadesID");
 
-                    b.Property<string>("NormalizedUserName");
+                    b.Property<decimal>("ValorEmp");
 
-                    b.Property<string>("PasswordHash");
+                    b.Property<decimal>("ValorEst");
 
-                    b.Property<string>("PhoneNumber");
+                    b.Property<decimal>("ValorFam");
 
-                    b.Property<bool>("PhoneNumberConfirmed");
+                    b.Property<decimal>("ValorGrad");
 
-                    b.Property<string>("Role");
+                    b.HasKey("TarifaID");
 
-                    b.Property<string>("RoleId");
+                    b.HasIndex("ActividadesID");
 
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstructorID");
-
-                    b.ToTable("Usuario");
+                    b.ToTable("Tarifas");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -306,18 +300,28 @@ namespace SistemaAC.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SistemaAC.Models.Instructor", b =>
+            modelBuilder.Entity("SistemaAC.Models.Horario", b =>
                 {
-                    b.HasOne("SistemaAC.Models.Actividades")
-                        .WithMany("Instructor")
-                        .HasForeignKey("ActividadesActividadID");
+                    b.HasOne("SistemaAC.Models.Actividades", "Actividades")
+                        .WithMany("Horario")
+                        .HasForeignKey("ActividadesID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("SistemaAC.Models.Usuario", b =>
+            modelBuilder.Entity("SistemaAC.Models.Maquinaria", b =>
                 {
-                    b.HasOne("SistemaAC.Models.Instructor")
-                        .WithMany("Usuario")
-                        .HasForeignKey("InstructorID");
+                    b.HasOne("SistemaAC.Models.Actividades", "Actividades")
+                        .WithMany("Maquinaria")
+                        .HasForeignKey("ActividadesID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SistemaAC.Models.Tarifas", b =>
+                {
+                    b.HasOne("SistemaAC.Models.Actividades", "Actividades")
+                        .WithMany("Tarifas")
+                        .HasForeignKey("ActividadesID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

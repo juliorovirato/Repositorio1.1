@@ -180,27 +180,41 @@ $().ready(() => {
     document.getElementById("filtrar").focus();
     filtrarDatos(1);
 });
+
 var idActividades;
+//var funcion;
+
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
-    var cantidad = document.getElementById("Cantidad").value;
+    var cantidadIns = document.getElementById("CantidadIns").value;
     var descripcion = document.getElementById("Descripcion").value;
     var estados = document.getElementById('Estado');
     var estado = estados.options[estados.selectedIndex].value;
-    var codinstructor = document.getElementById("Codigo").value;
     var action = 'Actividades/guardarActividad';
-    var actividad = new Actividades(nombre, cantidad, descripcion, estado, codinstructor, action);
+    //if (funcion == 0) {
+    //    var action = 'Actividades/guardarActividad';
+    //} else {
+    //    var action = 'Actividades/editarActividad';
+    //}
+    var actividad = new Actividades(nombre, cantidadIns, descripcion, estado, action);
     actividad.agregarActividad();
 }
 var filtrarDatos = (numPagina) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Actividades/filtrarDatos';
-    var actividad = new Actividades(valor, "", "", "", "", action);
+    var actividad = new Actividades(valor, "", "", "", action);
     actividad.filtrarDatos(numPagina);
 }
+
 var editarEstado = (id) => {
-    idActividades = id;
-    var action = 'Actividades/getActividades';
-    var actividades = new Actividades("", "", "", "", "", action);
-    actividades.getActividades(id);
+    idActividad = id;
+    var action = 'Actividades/getActividad';
+    var actividades = new Actividades("", "", "", "", action);
+    actividades.qetActividad(id);
 }
+
+//var editarActividad = () => {
+//    var action = 'Actividades/editarActividad';
+//    var actividades = new Actividades("", "", "", "", "", action);
+//    actividades.editarActividad(idActividades, funcion);
+//}

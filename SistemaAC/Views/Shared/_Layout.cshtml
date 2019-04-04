@@ -31,11 +31,11 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
-                    <li><a asp-area="" asp-controller="Horarios" asp-action="">Horario</a></li>
+                    <li><a asp-area="" asp-controller="Horario" asp-action="Index">Horario</a></li>
                     <li><a asp-area="" asp-controller="Actividades" asp-action="Index">Actividades</a></li>
-                    <li><a asp-area="" asp-controller="Tarifas" asp-action="">Tarifas</a></li>
-                    <li><a asp-area="" asp-controller="Maquinarias" asp-action="">Inventario de máquinas</a></li>
-                    <li><a asp-area="" asp-controller="Instructores" asp-action="">Instructores</a></li>
+                    <li><a asp-area="" asp-controller="Tarifas" asp-action="Index">Tarifas</a></li>
+                    <li><a asp-area="" asp-controller="Maquinaria" asp-action="Index">Inventario de máquinas</a></li>
+                    <li><a asp-area="" asp-controller="Instructores" asp-action="Index">Instructores</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contáctenos</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
@@ -53,9 +53,10 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src ="~/js/Actividades.js" asp-append-version="true"></script>
+        <script src="~/js/Actividades.js" asp-append-version="true"></script>
+        @*<script src="~/js/Horarios.js" asp-append-version="true"></script>*@
         <script src="~/js/site.js" asp-append-version="true"></script>
-</environment>
+    </environment>
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"

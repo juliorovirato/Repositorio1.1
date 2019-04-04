@@ -9,12 +9,13 @@ namespace SistemaAC.Models
     public class Actividades
     {
         [Key]
-        public int ActividadID { get; set; }
-        public string Nombre { get; set; }
+        public int ActividadesID { get; set; }
+        public string NombreAct { get; set; }
         public string CantidadIns { get; set; }
         public string Descripcion { get; set; }
         public Boolean Estado { get; set; } = true;
-        public int InstructorCod { get; set; }
-        public ICollection<Instructor> Instructor { get; set; }
+        public ICollection<Horario> Horario { get; set; }
+        public ICollection<Tarifas> Tarifas { get; set; }
+        public ICollection<Maquinaria> Maquinaria { get; set; }
     }
 }

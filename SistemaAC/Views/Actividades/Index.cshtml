@@ -7,40 +7,36 @@
 <h2>Actividades</h2>
 
 <p>
-    <a data-toggle="modal" data-target="#modalAC" class="btn btn-info">Agregar Actividad</a>
+    <a data-toggle='modal' data-target='#modalAC' class='btn btn-info'>Agregar Actividad</a>
 </p>
 <div class="form-group">
-    <div class="col-md-10">
+    <div class="col-md-6">
         <input id="filtrar" name="filtrar" placeholder="Buscar" onkeyup="filtrarDatos(1);" class="form-control" />
     </div>
 </div>
 @*<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Nombre Actividad
-            </th>
-            <th>
-                Cantidad Inscritos
-            </th>
-            <th>
-                Descripcion
-            </th>
-            <th>
-                Estado
-            </th>
-            <th>
-                Codigo Instructor
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+        <thead>
+            <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NombreAct)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CantidadIns)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Estado)
+                    </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
+                    @Html.DisplayFor(modelItem => item.NombreAct)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CantidadIns)
@@ -52,17 +48,14 @@
                     @Html.DisplayFor(modelItem => item.Estado)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.InstructorCod)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.ActividadID">Editar</a> |
-                    <a asp-action="Details" asp-route-id="@item.ActividadID">Detalles</a> |
-                    <a asp-action="Delete" asp-route-id="@item.ActividadID">Eliminar</a>
+                    <a asp-action="Edit" asp-route-id="@item.ActividadesID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ActividadesID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ActividadesID">Delete</a>
                 </td>
             </tr>
-        }
-    </tbody>
-</table>*@
+    }
+        </tbody>
+    </table>*@
 
 <table class="table">
     <thead>
@@ -80,9 +73,6 @@
                 Estado
             </th>
             <th>
-                Codigo Instructor
-            </th>
-            <th>
                 Opciones
             </th>
         </tr>
@@ -93,48 +83,42 @@
 
 </div>
 
-<div class="modal fade" id="modalAC" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="modalAC" tabindex="-1" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-tittle" id="myModalLabel">Agregar Actividad</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close"><span aria-hidden="false">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Actividad</h4>
             </div>
             <div class="modal-body">
                 <form asp-action="">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label for="Nombre" class="col-md-2 control-label">Nombre Actividad</label>
+                            <label for="Nombre" class="col-md-2 control-label">Nombre</label>
                             <div class="col-md-10">
-                                <input for="Nombre" id="Nombre" placeholder="Nombre" name="Nombre" class="form-control" />
+                                <input form="Nombre" id="Nombre" placeholder="Nombre" name="Nombre" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="Cantidad" class="col-md-2 control-label">Cantidad Inscritos</label>
+                            <label for="CantidadIns" class="col-md-2 control-label">Cantidad Inscritos</label>
                             <div class="col-md-10">
-                                <input for="Cantidad" id="Cantidad" placeholder="Cantidad" name="Cantidad" class="form-control" />
+                                <input form="CantidadIns" id="CantidadIns" placeholder="CantidadIns" name="CantidadIns" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="Descripcion" class="col-md-2 control-label">Descripción</label>
+                            <label for="Descripcion" class="col-md-2 control-label">Descripcion</label>
                             <div class="col-md-10">
-                                <input for="Descripcion" id="Descripcion" placeholder="Descripcion" name="Descripcion" class="form-control" />
+                                <input form="Descripcion" id="Descripcion" placeholder="Descripcion" name="Descripcion" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="Estado" class="col-md-2 control-label">Estado</label>
                             <div class="col-md-10">
-                                <select id="Estado" class="from-control">
-                                    <option value='0'>Seleccione un estado</option>
-                                    <option value='true'>Activa</option>
-                                    <option value='false'>No Activa</option>
+                                <select id='Estado' class="form-control">
+                                    <option value="0">Seleccione un estado</option>
+                                    <option value="true">Activo</option>
+                                    <option value="false">No Activo</option>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="Codigo" class="col-md-2 control-label">Codigo Instructor</label>
-                            <div class="col-md-10">
-                                <input for="Codigo" id="Codigo" placeholder="Codigo" name="Codigo" class="form-control" />
                             </div>
                         </div>
                         <label id="mensaje" class="col-md-2 control-label"></label>
