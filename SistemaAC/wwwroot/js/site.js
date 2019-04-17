@@ -178,43 +178,42 @@ function crearUsuario(action) {
 
 $().ready(() => {
     document.getElementById("filtrar").focus();
-    filtrarDatos(1);
+    filtrarDatos(1, "nombre");
 });
-
-var idActividades;
-//var funcion;
-
+var idActividad;
+var funcion = 0;
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
-    var cantidadIns = document.getElementById("CantidadIns").value;
+    var cantidad = document.getElementById("Cantidad").value;
     var descripcion = document.getElementById("Descripcion").value;
     var estados = document.getElementById('Estado');
     var estado = estados.options[estados.selectedIndex].value;
-    var action = 'Actividades/guardarActividad';
-    //if (funcion == 0) {
-    //    var action = 'Actividades/guardarActividad';
-    //} else {
-    //    var action = 'Actividades/editarActividad';
-    //}
-    var actividad = new Actividades(nombre, cantidadIns, descripcion, estado, action);
-    actividad.agregarActividad();
+    if (funcion == 0) {
+        var action = 'Actividades/guardarActividad';
+    } else {
+        var action = 'Actividades/editarActividad';
+    }
+    var actividad = new Actividades(nombre, cantidad, descripcion, estado, action);
+    actividad.agregarActividad(idActividad, funcion);
 }
-var filtrarDatos = (numPagina) => {
+
+var filtrarDatos = (numPagina, order) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Actividades/filtrarDatos';
     var actividad = new Actividades(valor, "", "", "", action);
-    actividad.filtrarDatos(numPagina);
+    actividad.filtrarDatos(numPagina, order);
 }
 
-var editarEstado = (id) => {
+var editarEstado = (id, fun) => {
     idActividad = id;
-    var action = 'Actividades/getActividad';
-    var actividades = new Actividades("", "", "", "", action);
-    actividades.qetActividad(id);
+    funcion = fun;
+    var action = 'Actividades/getActividades';
+    var actividad = new Actividades("", "", "", "", action);
+    actividad.qetActividad(id, funcion);
 }
 
-//var editarActividad = () => {
-//    var action = 'Actividades/editarActividad';
-//    var actividades = new Actividades("", "", "", "", "", action);
-//    actividades.editarActividad(idActividades, funcion);
-//}
+var editarActividad = () => {
+    var action = 'Actividades/editarActividad';
+    var actividad = new Actividades("", "", "", "", action);
+    actividad.editarActividad(idActividad, funcion);
+}

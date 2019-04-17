@@ -13652,11 +13652,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Ing. del software\\Proyecto\\Codigo\\SistemaAC\\SistemaAC\\SistemaAC.csproj",
+      "projectUniqueName": "E:\\IS\\Proyecto\\Codigo\\SistemaAC\\SistemaAC\\SistemaAC.csproj",
       "projectName": "SistemaAC",
-      "projectPath": "E:\\Ing. del software\\Proyecto\\Codigo\\SistemaAC\\SistemaAC\\SistemaAC.csproj",
+      "projectPath": "E:\\IS\\Proyecto\\Codigo\\SistemaAC\\SistemaAC\\SistemaAC.csproj",
       "packagesPath": "C:\\Users\\julio\\.nuget\\packages\\",
-      "outputPath": "E:\\Ing. del software\\Proyecto\\Codigo\\SistemaAC\\SistemaAC\\obj\\",
+      "outputPath": "E:\\IS\\Proyecto\\Codigo\\SistemaAC\\SistemaAC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

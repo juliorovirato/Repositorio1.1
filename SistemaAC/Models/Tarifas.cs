@@ -11,10 +11,10 @@ namespace SistemaAC.Models
         [Key]
         public int TarifaID { get; set; }
         public int ActividadesID { get; set; }
-        public decimal ValorEst { get; set; }
-        public decimal ValorEmp { get; set; }
-        public decimal ValorFam { get; set; }
-        public decimal ValorGrad { get; set; }
+        public double ValorEst { get; set; }
+        public double ValorEmp { get; set; }
+        public double ValorFam { get; set; }
+        public double ValorGrad { get; set; }
         public Actividades Actividades { get; set; }
     }
 }

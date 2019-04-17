@@ -16,6 +16,7 @@ namespace SistemaAC.Controllers
     {
         private readonly ApplicationDbContext _context;
         private ActividadesModels actividadesModels;
+
         public ActividadesController(ApplicationDbContext context)
         {
             _context = context;
@@ -25,121 +26,23 @@ namespace SistemaAC.Controllers
         // GET: Actividades
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Actividades.ToListAsync());
+            return View();
         }
-        public List<object[]> filtrarDatos(int numPagina, string valor)
+        public List<object[]> filtrarDatos(int numPagina, string valor, string order)
         {
-            return actividadesModels.filtrarDatos(numPagina, valor);
+            return actividadesModels.filtrarDatos(numPagina, valor, order);
         }
-        public List<Actividades> getActividad(int id)
+        public List<Actividades> getActividades(int id)
         {
-            return actividadesModels.getActividad(id);
+            return actividadesModels.getActividades(id);
         }
-        // GET: Actividades/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public List<IdentityError> editarActividad(int id, string nombre, string cantidad, string descripcion, Boolean estado, int funcion)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var actividades = await _context.Actividades
-                .SingleOrDefaultAsync(m => m.ActividadesID == id);
-            if (actividades == null)
-            {
-                return NotFound();
-            }
-
-            return View(actividades);
+            return actividadesModels.editarActividad(id, nombre, cantidad, descripcion, estado, funcion);
         }
-        public List<IdentityError> guardarActividad(string nombre, string cantidadIns, string descripcion, string estado)
+        public List<IdentityError> guardarActividad(string nombre, string cantidad, string descripcion, string estado)
         {
-            return actividadesModels.guardarActividad(nombre, cantidadIns, descripcion, estado);
-        }
-
-        // GET: Actividades/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var actividades = await _context.Actividades.SingleOrDefaultAsync(m => m.ActividadesID == id);
-            if (actividades == null)
-            {
-                return NotFound();
-            }
-            return View(actividades);
-        }
-
-        // POST: Actividades/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ActividadesID,NombreAct,CantidadIns,Descripcion,Estado")] Actividades actividades)
-        {
-            if (id != actividades.ActividadesID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(actividades);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ActividadesExists(actividades.ActividadesID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(actividades);
-        }
-
-        // GET: Actividades/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var actividades = await _context.Actividades
-                .SingleOrDefaultAsync(m => m.ActividadesID == id);
-            if (actividades == null)
-            {
-                return NotFound();
-            }
-
-            return View(actividades);
-        }
-
-        // POST: Actividades/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var actividades = await _context.Actividades.SingleOrDefaultAsync(m => m.ActividadesID == id);
-            _context.Actividades.Remove(actividades);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool ActividadesExists(int id)
-        {
-            return _context.Actividades.Any(e => e.ActividadesID == id);
+            return actividadesModels.guardarActividad(nombre, cantidad, descripcion, estado);
         }
     }
 }

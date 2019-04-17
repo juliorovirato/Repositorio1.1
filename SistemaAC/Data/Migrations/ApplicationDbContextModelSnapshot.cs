@@ -133,13 +133,13 @@ namespace SistemaAC.Data.Migrations
                     b.Property<int>("ActividadesID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("CantidadIns");
+                    b.Property<string>("Cantidad");
 
                     b.Property<string>("Descripcion");
 
                     b.Property<bool>("Estado");
 
-                    b.Property<string>("NombreAct");
+                    b.Property<string>("Nombre");
 
                     b.HasKey("ActividadesID");
 
@@ -204,9 +204,9 @@ namespace SistemaAC.Data.Migrations
 
                     b.Property<int>("ActividadesID");
 
-                    b.Property<byte>("DiaAct");
+                    b.Property<string>("Dia");
 
-                    b.Property<byte>("HoraAct");
+                    b.Property<string>("Hora");
 
                     b.HasKey("HorarioID");
 
@@ -224,7 +224,7 @@ namespace SistemaAC.Data.Migrations
 
                     b.Property<string>("Cantidad");
 
-                    b.Property<string>("NombreMaq");
+                    b.Property<string>("Nombre");
 
                     b.HasKey("MaquinariaID");
 
@@ -240,13 +240,13 @@ namespace SistemaAC.Data.Migrations
 
                     b.Property<int>("ActividadesID");
 
-                    b.Property<decimal>("ValorEmp");
+                    b.Property<double>("ValorEmp");
 
-                    b.Property<decimal>("ValorEst");
+                    b.Property<double>("ValorEst");
 
-                    b.Property<decimal>("ValorFam");
+                    b.Property<double>("ValorFam");
 
-                    b.Property<decimal>("ValorGrad");
+                    b.Property<double>("ValorGrad");
 
                     b.HasKey("TarifaID");
 

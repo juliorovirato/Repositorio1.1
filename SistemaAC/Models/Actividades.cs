@@ -10,8 +10,8 @@ namespace SistemaAC.Models
     {
         [Key]
         public int ActividadesID { get; set; }
-        public string NombreAct { get; set; }
-        public string CantidadIns { get; set; }
+        public string Nombre { get; set; }
+        public string Cantidad { get; set; }
         public string Descripcion { get; set; }
         public Boolean Estado { get; set; } = true;
         public ICollection<Horario> Horario { get; set; }

@@ -11,8 +11,8 @@ namespace SistemaAC.Models
         [Key]
         public int HorarioID { get; set; }
         public int ActividadesID { get; set; }
-        public byte DiaAct { get; set; }
-        public byte HoraAct { get; set; }
+        public string Dia { get; set; }
+        public string Hora { get; set; }
         public Actividades Actividades { get; set; }
     }
 }

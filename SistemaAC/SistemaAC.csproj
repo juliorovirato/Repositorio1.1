@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-SistemaAC-714F01E3-D501-42AC-A506-0A227E13554E</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20190408002849_[migration1].cs" />
+    <Compile Remove="Data\Migrations\20190408002849_[migration1].Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.9" />

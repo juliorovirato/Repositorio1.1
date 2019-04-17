@@ -15,10 +15,10 @@ namespace SistemaAC.Data.Migrations
                 {
                     ActividadesID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CantidadIns = table.Column<string>(nullable: true),
+                    Cantidad = table.Column<string>(nullable: true),
                     Descripcion = table.Column<string>(nullable: true),
                     Estado = table.Column<bool>(nullable: false),
-                    NombreAct = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,8 +32,8 @@ namespace SistemaAC.Data.Migrations
                     HorarioID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ActividadesID = table.Column<int>(nullable: false),
-                    DiaAct = table.Column<byte>(nullable: false),
-                    HoraAct = table.Column<byte>(nullable: false)
+                    Dia = table.Column<string>(nullable: true),
+                    Hora = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,7 +54,7 @@ namespace SistemaAC.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ActividadesID = table.Column<int>(nullable: false),
                     Cantidad = table.Column<string>(nullable: true),
-                    NombreMaq = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -74,10 +74,10 @@ namespace SistemaAC.Data.Migrations
                     TarifaID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ActividadesID = table.Column<int>(nullable: false),
-                    ValorEmp = table.Column<decimal>(nullable: false),
-                    ValorEst = table.Column<decimal>(nullable: false),
-                    ValorFam = table.Column<decimal>(nullable: false),
-                    ValorGrad = table.Column<decimal>(nullable: false)
+                    ValorEmp = table.Column<double>(nullable: false),
+                    ValorEst = table.Column<double>(nullable: false),
+                    ValorFam = table.Column<double>(nullable: false),
+                    ValorGrad = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {
