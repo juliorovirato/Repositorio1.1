@@ -5,7 +5,7 @@ $('#modalEditar').on('shown.bs.modal', function () {
 $('#modalAC').on('shown.bs.modal', function () {
     $('#Nombre').focus()
 })
-
+/** Codigo de Usuarios */
 function getUsuario(id,action) {
     $.ajax({
         type: "POST",
@@ -179,9 +179,18 @@ function crearUsuario(action) {
 $().ready(() => {
     document.getElementById("filtrar").focus();
     filtrarDatos(1, "nombre");
+
+    getActividades();
+
+    filtrarHorario(1, "dia")
 });
+$('#modalCS').on('shown.bs.modal', function () {
+    $('#Dia').focus()
+})
+
 var idActividad;
 var funcion = 0;
+/** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
     var cantidad = document.getElementById("Cantidad").value;
@@ -216,4 +225,26 @@ var editarActividad = () => {
     var action = 'Actividades/editarActividad';
     var actividad = new Actividades("", "", "", "", action);
     actividad.editarActividad(idActividad, funcion);
+}
+
+/** Codigo de Horarios */
+var getActividades = () => {
+    var action = 'Horarios/getActividades';
+    var horarios = new Horarios("", "", "", action);
+    horarios.getActividades();
+}
+var agregarCurso = () => {
+    var action = 'Horarios/agregarHorario';
+    var dia = document.getElementById("Dia").value;
+    var hora = document.getElementById("Hora").value;
+    var actividades = document.getElementById('ActividadHorarios');
+    var actividad = actividades.options[actividades.selectedIndex].value;
+    var horarios = new Horarios(dia, hora, actividad, action);
+    horarios.agregarHorario("", "");
+}
+var filtrarHorario = (numPagina, order) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Horarios/filtrarHorario';
+    var horarios = new Horarios(valor, "", "", action);
+    horarios.filtrarHorario(numPagina, order);
 }

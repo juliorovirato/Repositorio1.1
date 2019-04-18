@@ -40,7 +40,7 @@ namespace SistemaAC.ModelsClass
         }
         public List<object[]> filtrarDatos(int numPagina, string valor, string order)
         {
-            int count = 0, cant, numRegistros = 0, inicio = 0, reg_por_pagina = 5;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 5;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
