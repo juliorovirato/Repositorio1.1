@@ -8,7 +8,7 @@ class Maquinaria {
         this.actividad = actividad;
         this.action = action;
     }
-    getActividades(id, funcion) {
+    getActividadesM(id, funcion) {
         var action = this.action;
         var count = 1;
         $.ajax({

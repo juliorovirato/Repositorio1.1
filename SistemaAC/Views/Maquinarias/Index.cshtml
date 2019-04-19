@@ -18,13 +18,13 @@
     <thead>
         <tr>
             <th>
-                <a href="#" onclick='filtrarHorario(1, "nombre")'>Nombre de la maquina</a>
+                <a href="#" onclick='filtrarMaquinaria(1, "nombre")'>Nombre de la maquina</a>
             </th>
             <th>
-                <a href="#" onclick='filtrarHorario(1, "cantidad")'>Cantidad</a>
+                <a href="#" onclick='filtrarMaquinaria(1, "cantidad")'>Cantidad</a>
             </th>
             <th>
-                <a href="#" onclick='filtrarHorario(1, "actividad")'>Nombre de la actividad</a>
+                <a href="#" onclick='filtrarMaquinaria(1, "actividad")'>Nombre de la actividad</a>
             </th>
             <th>
                 Opciones
@@ -62,7 +62,6 @@
                             <label for="Actividad" class="col-md-2 control-label">Nombre de la actividad</label>
                             <div class="col-md-10">
                                 <select id='ActividadMaquinarias' class="form-control"></select>
-                                
                             </div>
                         </div>
 
@@ -81,13 +80,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"></h4>
+                <h4 class="modal-title">Actualizar estado</h4>
             </div>
             <div class="modal-body">
                 <h3 id="titleMaquinaria" class="modal-title"></h3>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" onclick="editarMaquinaria1()" class="btn btn-primary">Aceptar</button>
             </div>
         </div><!-- /.modal-content -->

@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SistemaAC.Data;
-using SistemaAC.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using SistemaAC.Data;
+using SistemaAC.Models;
 
 namespace SistemaAC.ModelsClass
 {
@@ -18,11 +18,11 @@ namespace SistemaAC.ModelsClass
             this.context = context;
         }
 
-        internal List<Actividades> getActividades()
+        internal List<Actividades> getActividadesM()
         {
             return context.Actividades.Where(c => c.Estado == true).ToList();
         }
-        public List<Actividades> getActividad2(int id)
+        public List<Actividades> getActividad(int id)
         {
             return context.Actividades.Where(a => a.ActividadesID == id).ToList();
         }
@@ -60,46 +60,45 @@ namespace SistemaAC.ModelsClass
         }
         public List<object[]> filtrarMaquinaria(int numPagina, string valor, string order)
         {
-            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 1;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 20;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
             IEnumerable<Maquinaria> query;
-            List<Maquinaria> maquinaria = null;
+            List<Maquinaria> maquinarias = null;
             switch (order)
             {
                 case "nombre":
-                    maquinaria = context.Maquinaria.OrderBy(c => c.Nombre).ToList();
+                    maquinarias = context.Maquinaria.OrderBy(c => c.Nombre).ToList();
                     break;
                 case "cantidad":
-                    maquinaria = context.Maquinaria.OrderBy(c => c.Cantidad).ToList();
+                    maquinarias = context.Maquinaria.OrderBy(c => c.Cantidad).ToList();
                     break;
                 case "actividad":
-                    maquinaria = context.Maquinaria.OrderBy(c => c.ActividadesID).ToList();
+                    maquinarias = context.Maquinaria.OrderBy(c => c.ActividadesID).ToList();
                     break;
-
             }
-            numRegistros = maquinaria.Count;
+            numRegistros = maquinarias.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
             if (valor == "null")
             {
-                query = maquinaria.Skip(inicio).Take(reg_por_pagina);
+                query = maquinarias.Skip(inicio).Take(reg_por_pagina);
             }
             else
             {
-                query = maquinaria.Where(c => c.Nombre.StartsWith(valor) || c.Cantidad.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
+                query = maquinarias.Where(c => c.Nombre.StartsWith(valor) || c.Cantidad.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
             }
             cant = query.Count();
             foreach (var item in query)
             {
-                var actividad = getActividad2(item.ActividadesID);
+                var actividad = getActividad(item.ActividadesID);
                 dataFilter += "<tr>" +
                     "<td>" + item.Nombre + "</td>" +
                     "<td>" + item.Cantidad + "</td>" +
                     "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
-                    "<a data-toggle='modal' data-target='#modalCS' onclick='editarHorario(" + item.MaquinariaID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
+                    "<a data-toggle='modal' data-target='#modalDS' onclick='editarMaquinaria(" + item.MaquinariaID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
                     "</td>" +
                 "</tr>";
 
@@ -109,8 +108,8 @@ namespace SistemaAC.ModelsClass
                 if (numPagina > 1)
                 {
                     pagina = numPagina - 1;
-                    paginador += "<a class='btn btn-default' onclick='filtrarCurso(" + 1 + ',' + '"' + order + '"' + ")'> << </a>" +
-                    "<a class='btn btn-default' onclick='filtrarCurso(" + pagina + ',' + '"' + order + '"' + ")'> < </a>";
+                    paginador += "<a class='btn btn-default' onclick='filtrarMaquinaria(" + 1 + ',' + '"' + order + '"' + ")'> << </a>" +
+                    "<a class='btn btn-default' onclick='filtrarMaquinaria(" + pagina + ',' + '"' + order + '"' + ")'> < </a>";
                 }
                 if (1 < can_paginas)
                 {
@@ -119,8 +118,8 @@ namespace SistemaAC.ModelsClass
                 if (numPagina < can_paginas)
                 {
                     pagina = numPagina + 1;
-                    paginador += "<a class='btn btn-default' onclick='filtrarCurso(" + pagina + ',' + '"' + order + '"' + ")'>  > </a>" +
-                                 "<a class='btn btn-default' onclick='filtrarCurso(" + can_paginas + ',' + '"' + order + '"' + ")'> >> </a>";
+                    paginador += "<a class='btn btn-default' onclick='filtrarMaquinaria(" + pagina + ',' + '"' + order + '"' + ")'>  > </a>" +
+                                 "<a class='btn btn-default' onclick='filtrarMaquinaria(" + can_paginas + ',' + '"' + order + '"' + ")'> >> </a>";
                 }
             }
             object[] dataObj = { dataFilter, paginador };

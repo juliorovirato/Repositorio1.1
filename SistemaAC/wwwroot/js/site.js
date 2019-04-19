@@ -187,12 +187,18 @@ $().ready(() => {
             getActividades(0, 0);
             filtrarHorario(1, "dia");
         case "/Maquinarias":
-            getActividades2(0, 0);
+            getActividadesM(0, 0);
             filtrarMaquinaria(1, "nombre");
     }
 });
 $('#modalCS').on('shown.bs.modal', function () {
     $('#Dia').focus()
+})
+$('#modalDS').on('shown.bs.modal', function () {
+    $('#Nombre').focus()
+})
+$('#modalAS').on('shown.bs.modal', function () {
+    $('#Especialidad').focus()
 })
 
 var idActividad, funcion = 0, idHorario, idMaquinaria;
@@ -281,10 +287,10 @@ var restablecer = () => {
 }
 
 /** Codigo de Maquinarias */
-var getActividades2 = (id, fun) => {
-    var action = 'Maquinarias/getMaquinaria';
+var getActividadesM = (id, fun) => {
+    var action = 'Maquinarias/getActividadesM';
     var maquinaria = new Maquinaria("", "", "", action);
-    maquinaria.getMaquinaria(id, fun);
+    maquinaria.getActividadesM(id, fun);
 }
 var agregarMaquinaria = () => {
     if (funcion == 0) {
@@ -322,4 +328,20 @@ var editarMaquinaria1 = () => {
 var restablecer = () => {
     var maquinarias = new Maquinaria("", "", "", "");
     maquinarias.restablecer();
+}
+var instructores = new Instructores();
+/** Codigo de Instructores */
+var guardarInstructor = () => {
+    if (funcion == 0) {
+        var action = 'Instructores/guardarInstructor';
+    }
+    var id = 0;
+    var especialidad = document.getElementById("Especialidad").value;
+    var nombre = document.getElementById("Nombre").value;
+    var apellido = document.getElementById("Apellidos").value;
+    var documento = document.getElementById("Documento").value;
+    var email = document.getElementById("Email").value;
+    var telefono = document.getElementById("Telefono").value;
+    var estado = document.getElementById("Estado").checked
+    instructores.guardarInstructor(id, funcion, action, especialidad, nombre, apellido, documento, email, telefono, estado);
 }

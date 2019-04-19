@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using SistemaAC.Data;
 using System;
 
@@ -233,6 +234,33 @@ namespace SistemaAC.Data.Migrations
                     b.ToTable("Maquinaria");
                 });
 
+            modelBuilder.Entity("SistemaAC.Models.Persona", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Apellidos");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("Documento");
+
+                    b.Property<string>("Email");
+
+                    b.Property<bool>("Estado");
+
+                    b.Property<string>("Nombres");
+
+                    b.Property<string>("Telefono");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Persona");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Persona");
+                });
+
             modelBuilder.Entity("SistemaAC.Models.Tarifas", b =>
                 {
                     b.Property<int>("TarifaID")
@@ -253,6 +281,28 @@ namespace SistemaAC.Data.Migrations
                     b.HasIndex("ActividadesID");
 
                     b.ToTable("Tarifas");
+                });
+
+            modelBuilder.Entity("SistemaAC.Models.Beneficiario", b =>
+                {
+                    b.HasBaseType("SistemaAC.Models.Persona");
+
+                    b.Property<string>("Codigo");
+
+                    b.ToTable("Beneficiario");
+
+                    b.HasDiscriminator().HasValue("Beneficiario");
+                });
+
+            modelBuilder.Entity("SistemaAC.Models.Instructor", b =>
+                {
+                    b.HasBaseType("SistemaAC.Models.Persona");
+
+                    b.Property<string>("Especialidad");
+
+                    b.ToTable("Instructor");
+
+                    b.HasDiscriminator().HasValue("Instructor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

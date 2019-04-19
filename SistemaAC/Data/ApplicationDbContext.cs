@@ -32,5 +32,11 @@ namespace SistemaAC.Data
         public DbSet<SistemaAC.Models.Maquinaria> Maquinaria { get; set; }
 
         public DbSet<SistemaAC.Models.Tarifas> Tarifas { get; set; }
+
+        public DbSet<SistemaAC.Models.Beneficiario> Beneficiario { get; set; }
+
+        public DbSet<SistemaAC.Models.Instructor> Instructor { get; set; }
+
+        public DbSet<SistemaAC.Models.Persona> Persona { get; set; }
     }
 }
