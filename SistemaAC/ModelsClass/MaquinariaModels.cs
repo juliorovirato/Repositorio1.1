@@ -22,7 +22,7 @@ namespace SistemaAC.ModelsClass
         {
             return context.Actividades.Where(c => c.Estado == true).ToList();
         }
-        public List<Actividades> getActividad(int id)
+        public List<Actividades> getActividad2(int id)
         {
             return context.Actividades.Where(a => a.ActividadesID == id).ToList();
         }
@@ -36,7 +36,7 @@ namespace SistemaAC.ModelsClass
             {
                 Nombre = nombre,
                 Cantidad = cantidad,
-                ActividadesID = actividad
+                ActividadesID = actividad,
             };
             try
             {
@@ -60,7 +60,7 @@ namespace SistemaAC.ModelsClass
         }
         public List<object[]> filtrarMaquinaria(int numPagina, string valor, string order)
         {
-            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 20;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 1;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
@@ -93,7 +93,7 @@ namespace SistemaAC.ModelsClass
             cant = query.Count();
             foreach (var item in query)
             {
-                var actividad = getActividad(item.ActividadesID);
+                var actividad = getActividad2(item.ActividadesID);
                 dataFilter += "<tr>" +
                     "<td>" + item.Nombre + "</td>" +
                     "<td>" + item.Cantidad + "</td>" +
@@ -109,8 +109,8 @@ namespace SistemaAC.ModelsClass
                 if (numPagina > 1)
                 {
                     pagina = numPagina - 1;
-                    paginador += "<a class='btn btn-default' onclick='filtrarHorario(" + 1 + ',' + '"' + order + '"' + ")'> << </a>" +
-                    "<a class='btn btn-default' onclick='filtrarHorario(" + pagina + ',' + '"' + order + '"' + ")'> < </a>";
+                    paginador += "<a class='btn btn-default' onclick='filtrarCurso(" + 1 + ',' + '"' + order + '"' + ")'> << </a>" +
+                    "<a class='btn btn-default' onclick='filtrarCurso(" + pagina + ',' + '"' + order + '"' + ")'> < </a>";
                 }
                 if (1 < can_paginas)
                 {
@@ -119,8 +119,8 @@ namespace SistemaAC.ModelsClass
                 if (numPagina < can_paginas)
                 {
                     pagina = numPagina + 1;
-                    paginador += "<a class='btn btn-default' onclick='filtrarHorario(" + pagina + ',' + '"' + order + '"' + ")'>  > </a>" +
-                                 "<a class='btn btn-default' onclick='filtrarHorario(" + can_paginas + ',' + '"' + order + '"' + ")'> >> </a>";
+                    paginador += "<a class='btn btn-default' onclick='filtrarCurso(" + pagina + ',' + '"' + order + '"' + ")'>  > </a>" +
+                                 "<a class='btn btn-default' onclick='filtrarCurso(" + can_paginas + ',' + '"' + order + '"' + ")'> >> </a>";
                 }
             }
             object[] dataObj = { dataFilter, paginador };

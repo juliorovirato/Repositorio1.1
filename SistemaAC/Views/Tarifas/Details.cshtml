@@ -1,0 +1,48 @@
+﻿@model SistemaAC.Models.Tarifas
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Tarifas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorEst)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorEst)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorEmp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorEmp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorFam)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorFam)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ValorGrad)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ValorGrad)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Actividades)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Actividades.ActividadesID)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TarifaID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

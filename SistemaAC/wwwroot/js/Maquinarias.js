@@ -17,14 +17,14 @@ class Maquinaria {
             data: {},
             success: (response) => {
                 //console.log(response);
-                document.getElementById('ActividadMaquinarias').options[0] = new Option("Seleccione un curso", 0);
+                document.getElementById('ActividadMaquinarias').options[0] = new Option("Seleccione una actividad", 0);
                 if (0 < response.length) {
                     for (var i = 0; i < response.length; i++) {
                         if (0 == funcion) {
                             document.getElementById('ActividadMaquinarias').options[count] = new Option(response[i].nombre, response[i].actividadesID);
                             count++;
                         } else {
-                            if (id == response[i].actividadesID) {
+                            if (id == response[i].categoriaID) {
                                 document.getElementById('ActividadMaquinarias').options[0] = new Option(response[i].nombre, response[i].actividadesID);
                                 document.getElementById('ActividadMaquinarias').selectedIndex = 0;
                                 break;
@@ -50,7 +50,7 @@ class Maquinaria {
                     var cantidad = this.cantidad;
                     var actividad = this.actividad;
                     var action = this.action;
-                    //console.log(dia);
+                    //console.log(nombre);
                     $.ajax({
                         type: "POST",
                         url: action,
@@ -95,7 +95,7 @@ class Maquinaria {
                 console.log(response);
                 if (funcion == 0) {
                     promesa = Promise.resolve({
-                        id: response[0].maquinariaID,
+                        id: response[0].maquinariasID,
                         nombre: response[0].nombre,
                         cantidad: response[0].cantidad,
                         actividad: response[0].actividadesID
@@ -112,8 +112,8 @@ class Maquinaria {
         var nombre, cantidad, actividad;
         var action = this.action;
         promesa.then(data => {
-            //id = data.id;
-            nombre = data.nombre;
+            // id = data.id;
+            nombre = data.nombre
             cantidad = data.cantidad;
             actividad = data.actividadesID;
             $.ajax({
@@ -136,7 +136,7 @@ class Maquinaria {
         document.getElementById('ActividadMaquinarias').selectedIndex = 0;
         document.getElementById("mensaje").innerHTML = "";
         filtrarMaquinaria(1, "nombre");
-        $('#modalCS').modal('hide');
-        $('#ModalHorario').modal('hide');
+        $('#modalDS').modal('hide');
+        $('#ModalMaquinaria').modal('hide');
     }
 }

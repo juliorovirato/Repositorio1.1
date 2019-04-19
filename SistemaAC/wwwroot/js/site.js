@@ -186,9 +186,9 @@ $().ready(() => {
         case "/Horarios":
             getActividades(0, 0);
             filtrarHorario(1, "dia");
-        //case "/Maquinarias":
-        //    getActividades(0, 0);
-        //    filtrarMaquinaria(1, "nombre");
+        case "/Maquinarias":
+            getActividades2(0, 0);
+            filtrarMaquinaria(1, "nombre");
     }
 });
 $('#modalCS').on('shown.bs.modal', function () {
@@ -280,11 +280,11 @@ var restablecer = () => {
     horarios.restablecer();
 }
 
-/** Codigo de Maquinarias 
-var getActividades = (id, fun) => {
-    var action = 'Maquinarias/getActividades';
-    var maquinarias = new Maquinarias("", "", "", action);
-    maquinarias.getActividades(id, fun);
+/** Codigo de Maquinarias */
+var getActividades2 = (id, fun) => {
+    var action = 'Maquinarias/getMaquinaria';
+    var maquinaria = new Maquinaria("", "", "", action);
+    maquinaria.getMaquinaria(id, fun);
 }
 var agregarMaquinaria = () => {
     if (funcion == 0) {
@@ -292,36 +292,34 @@ var agregarMaquinaria = () => {
     } else {
         var action = 'Maquinarias/editarMaquinaria';
     }
+
     var nombre = document.getElementById("Nombre").value;
-    var cantidad = document.getElementById("Cantida").value;
+    var cantidad = document.getElementById("Cantidad").value;
     var actividades = document.getElementById('ActividadMaquinarias');
     var actividad = actividades.options[actividades.selectedIndex].value;
-    var maquinarias = new Maquinarias(nombre, cantidad, actividad, action);
-    maquinarias.agregarMaquinaria(idMaquinaria, funcion);
+    var maquinaria = new Maquinaria(nombre, cantidad, actividad, action);
+    maquinaria.agregarMaquinaria(idMaquinaria, funcion);
     funcion = 0;
 }
 var filtrarMaquinaria = (numPagina, order) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Maquinarias/filtrarMaquinaria';
-    var maquinarias = new Maquinarias(valor, "", "", action);
+    var maquinarias = new Maquinaria(valor, "", "", action);
     maquinarias.filtrarMaquinaria(numPagina, order);
 }
-
 var editarMaquinaria = (id, fun) => {
     funcion = fun;
     idMaquinaria = id;
     var action = 'Maquinarias/getMaquinaria';
-    var maquinarias = new Maquinarias("", "", "", action);
+    var maquinarias = new Maquinaria("", "", "", action);
     maquinarias.getMaquinaria(id, fun);
 }
-
-var editarHorario1 = () => {
+var editarMaquinaria1 = () => {
     var action = 'Maquinarias/editarMaquinaria';
-    var maquinarias = new Maquinarias("", "", "", action);
+    var cursos = new Cursos("", "", "", action);
     maquinarias.editarMaquinaria(idMaquinaria, funcion);
 }
-
 var restablecer = () => {
-    var maquinarias = new Maquinarias("", "", "", "");
+    var maquinarias = new Maquinaria("", "", "", "");
     maquinarias.restablecer();
-}*/
+}

@@ -30,5 +30,7 @@ namespace SistemaAC.Data
         public DbSet<SistemaAC.Models.Horario> Horario { get; set; }
 
         public DbSet<SistemaAC.Models.Maquinaria> Maquinaria { get; set; }
+
+        public DbSet<SistemaAC.Models.Tarifas> Tarifas { get; set; }
     }
 }
