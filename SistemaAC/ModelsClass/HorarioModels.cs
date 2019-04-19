@@ -26,6 +26,10 @@ namespace SistemaAC.ModelsClass
         {
             return context.Actividades.Where(a => a.ActividadesID == id).ToList();
         }
+        public List<Horario> getHorario(int id)
+        {
+            return context.Horario.Where(c => c.HorarioID == id).ToList();
+        }
         public List<IdentityError> agregarHorario(int id, string dia, string hora, int actividad, string funcion)
         {
             var horario = new Horario
@@ -95,7 +99,7 @@ namespace SistemaAC.ModelsClass
                     "<td>" + item.Hora + "</td>" +
                     "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
-                    "<a data-toggle='modal' data-target='#modalAC' onclick='editarHorario(" + item.HorarioID + ',' + 1 + ")'  class='btn btn-success'>Edit</a>" +
+                    "<a data-toggle='modal' data-target='#modalCS' onclick='editarHorario(" + item.HorarioID + ',' + 1 + ")'  class='btn btn-success'>Edit</a>" +
                     "</td>" +
                 "</tr>";
 
@@ -103,6 +107,35 @@ namespace SistemaAC.ModelsClass
             object[] dataObj = { dataFilter, paginador };
             data.Add(dataObj);
             return data;
+        }
+        public List<IdentityError> editarHorario(int id, string dia, string hora, int actividad, int funcion)
+        {
+            var horario = new Horario
+            {
+                HorarioID = id,
+                Dia = dia,
+                Hora = hora,
+                ActividadesID = actividad,
+            };
+            try
+            {
+                context.Update(horario);
+                context.SaveChanges();
+                code = "Save";
+                des = "Save";
+            }
+            catch (Exception ex)
+            {
+                code = "error";
+                des = ex.Message;
+            }
+            errorList.Add(new IdentityError
+            {
+                Code = code,
+                Description = des
+            });
+
+            return errorList;
         }
     }
 }

@@ -177,19 +177,22 @@ function crearUsuario(action) {
 }
 
 $().ready(() => {
+    var URLactual = window.location;
     document.getElementById("filtrar").focus();
-    filtrarDatos(1, "nombre");
-
-    getActividades();
-
-    filtrarHorario(1, "dia")
+    switch (URLactual.pathname) {
+        case "/Actividades":
+            filtrarDatos(1, "nombre");
+            break;
+        case "/Horarios":
+            getActividades(0, 0);
+            filtrarHorario(1, "dia");
+    }
 });
 $('#modalCS').on('shown.bs.modal', function () {
     $('#Dia').focus()
 })
 
-var idActividad;
-var funcion = 0;
+var idActividad, funcion = 0, idHorario;
 /** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
@@ -204,6 +207,7 @@ var agregarActividad = () => {
     }
     var actividad = new Actividades(nombre, cantidad, descripcion, estado, action);
     actividad.agregarActividad(idActividad, funcion);
+    funcion = 0;
 }
 
 var filtrarDatos = (numPagina, order) => {
@@ -228,23 +232,47 @@ var editarActividad = () => {
 }
 
 /** Codigo de Horarios */
-var getActividades = () => {
+var getActividades = (id, fun) => {
     var action = 'Horarios/getActividades';
     var horarios = new Horarios("", "", "", action);
-    horarios.getActividades();
+    horarios.getActividades(id, fun);
 }
-var agregarCurso = () => {
-    var action = 'Horarios/agregarHorario';
+var agregarHorario = () => {
+    if (funcion == 0) {
+        var action = 'Horarios/agregarHorario';
+    } else {
+        var action = 'Horarios/editarHorario';
+    }
     var dia = document.getElementById("Dia").value;
     var hora = document.getElementById("Hora").value;
     var actividades = document.getElementById('ActividadHorarios');
     var actividad = actividades.options[actividades.selectedIndex].value;
     var horarios = new Horarios(dia, hora, actividad, action);
-    horarios.agregarHorario("", "");
+    horarios.agregarHorario(idHorario, funcion);
+    funcion = 0;
 }
 var filtrarHorario = (numPagina, order) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Horarios/filtrarHorario';
     var horarios = new Horarios(valor, "", "", action);
     horarios.filtrarHorario(numPagina, order);
+}
+
+var editarHorario = (id, fun) => {
+    funcion = fun;
+    idHorario = id;
+    var action = 'Horarios/getHorario';
+    var horarios = new Horarios("", "", "", action);
+    horarios.getHorario(id, fun);
+}
+
+var editarHorario1 = () => {
+    var action = 'Horarios/editarHorario';
+    var horarios = new Horarios("", "", "", action);
+    horarios.editarHorario(idHorario, funcion);
+}
+
+var restablecer = () => {
+    var horarios = new Horarios("", "", "", "");
+    horarios.restablecer();
 }

@@ -1,4 +1,6 @@
-﻿
+﻿var promesa = new Promise((resolve, reject) => {
+
+});
 class Horarios {
     constructor(dia, hora, actividad, action) {
         this.dia = dia;
@@ -6,7 +8,7 @@ class Horarios {
         this.actividad = actividad;
         this.action = action;
     }
-    getActividades() {
+    getActividades(id, funcion) {
         var action = this.action;
         var count = 1;
         $.ajax({
@@ -14,11 +16,20 @@ class Horarios {
             url: action,
             data: {},
             success: (response) => {
-                console.log(response);
+                //console.log(response);
+                document.getElementById('ActividadHorarios').options[0] = new Option("Seleccione un curso", 0);
                 if (0 < response.length) {
                     for (var i = 0; i < response.length; i++) {
-                        document.getElementById('ActividadHorarios').options[count] = new Option(response[i].nombre, response[i].actividadID);
-                        count++;
+                        if (0 == funcion) {
+                            document.getElementById('ActividadHorarios').options[count] = new Option(response[i].nombre, response[i].actividadesID);
+                            count++;
+                        } else {
+                            if (id == response[i].actividadesID) {
+                                document.getElementById('ActividadHorarios').options[0] = new Option(response[i].nombre, response[i].actividadesID);
+                                break;
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -38,7 +49,7 @@ class Horarios {
                     var hora = this.hora;
                     var actividad = this.actividad;
                     var action = this.action;
-                    console.log(dia);
+                    //console.log(dia);
                     $.ajax({
                         type: "POST",
                         url: action,
@@ -73,12 +84,58 @@ class Horarios {
             }
         });
     }
-    restablecers() {
+    getHorario(id, funcion) {
+        var action = this.action;
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { id },
+            success: (response) => {
+                console.log(response);
+                if (funcion == 0) {
+                    promesa = Promise.resolve({
+                        id: response[0].horarioID,
+                        dia: response[0].dia,
+                        hora: response[0].hora,
+                        actividad: response[0].actividadesID
+                    });
+                } else {
+                    document.getElementById("Dia").value = response[0].dia;
+                    document.getElementById("Hora").value = response[0].hora;
+                    getActividades(response[0].actividadesID, 1);
+                }
+            }
+        });
+    }
+    editarHorarios(id, funcion) {
+        var dia, hora, actividad;
+        var action = this.action;
+        promesa.then(data => {
+            //id = data.id;
+            dia = data.dia;
+            hora = data.hora;
+            actividad = data.actividadesID;
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: { id, dia, hora, actividad, funcion },
+                success: (response) => {
+                    if (response[0].code == "Save") {
+                        this.restablecer();
+                    } else {
+                        document.getElementById("titleHorario").innerHTML = response[0].description;
+                    }
+                }
+            });
+        });
+    }
+    restablecer() {
         document.getElementById("Dia").value = "";
         document.getElementById("Hora").value = "";
         document.getElementById('ActividadHorarios').selectedIndex = 0;
         document.getElementById("mensaje").innerHTML = "";
-
+        filtrarHorario(1, "dia");
         $('#modalCS').modal('hide');
+        $('#ModalHorario').modal('hide');
     }
 }

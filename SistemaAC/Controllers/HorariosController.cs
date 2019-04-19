@@ -40,6 +40,14 @@ namespace SistemaAC.Controllers
         {
             return horarioModels.filtrarHorario(numPagina, valor, order);
         }
+        public List<Horario> getHorario(int id)
+        {
+            return horarioModels.getHorario(id);
+        }
+        public List<IdentityError> editarHorario(int id, string dia, string hora, int actividad, int funcion)
+        {
+            return horarioModels.editarHorario(id, dia, hora, actividad, funcion);
+        }
         // GET: Horarios/Details/5
         public async Task<IActionResult> Details(int? id)
         {
