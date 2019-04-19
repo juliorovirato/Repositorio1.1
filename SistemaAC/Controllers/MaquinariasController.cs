@@ -12,42 +12,43 @@ using SistemaAC.ModelsClass;
 
 namespace SistemaAC.Controllers
 {
-    public class HorariosController : Controller
+    public class MaquinariasController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private HorarioModels horarioModels;
-        public HorariosController(ApplicationDbContext context)
+        private MaquinariaModels maquinariaModels;
+
+        public MaquinariasController(ApplicationDbContext context)
         {
             _context = context;
-            horarioModels = new HorarioModels(context);
+            maquinariaModels = new MaquinariaModels(context);
         }
 
-        // GET: Horarios
+        // GET: Maquinarias
         public async Task<IActionResult> Index()
         {
             return View();
         }
         public List<Actividades> getActividades()
         {
-            return horarioModels.getActividades();
+            return maquinariaModels.getActividades();
         }
-        public List<IdentityError> agregarHorario(int id, string dia, string hora, int actividad, string funcion)
+        public List<IdentityError> agregarMaquinaria(int id, string nombre, string cantidad, int actividad, string funcion)
         {
-            return horarioModels.agregarHorario(id, dia, hora, actividad, funcion);
+            return maquinariaModels.agregarMaquinaria(id, nombre, cantidad, actividad, funcion);
         }
-        public List<object[]> filtrarHorario(int numPagina, string valor, string order)
+        public List<object[]> filtrarMaquinaria(int numPagina, string valor, string order)
         {
-            return horarioModels.filtrarHorario(numPagina, valor, order);
+            return maquinariaModels.filtrarMaquinaria(numPagina, valor, order);
         }
-        public List<Horario> getHorario(int id)
+        public List<Maquinaria> getMaquinaria(int id)
         {
-            return horarioModels.getHorario(id);
+            return maquinariaModels.getMaquinaria(id);
         }
-        public List<IdentityError> editarHorario(int id, string dia, string hora, int actividad, int funcion)
+        public List<IdentityError> editarMaquinaria(int id, string nombre, string cantidad, int actividad, int funcion)
         {
-            return horarioModels.editarHorario(id, dia, hora, actividad, funcion);
+            return maquinariaModels.editarMaquinaria(id, nombre, cantidad, actividad, funcion);
         }
-        // GET: Horarios/Details/5
+        // GET: Maquinarias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,42 +56,42 @@ namespace SistemaAC.Controllers
                 return NotFound();
             }
 
-            var horario = await _context.Horario
-                .Include(h => h.Actividades)
-                .SingleOrDefaultAsync(m => m.HorarioID == id);
-            if (horario == null)
+            var maquinaria = await _context.Maquinaria
+                .Include(m => m.Actividades)
+                .SingleOrDefaultAsync(m => m.MaquinariaID == id);
+            if (maquinaria == null)
             {
                 return NotFound();
             }
 
-            return View(horario);
+            return View(maquinaria);
         }
 
-        // GET: Horarios/Create
+        // GET: Maquinarias/Create
         public IActionResult Create()
         {
             ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID");
             return View();
         }
 
-        // POST: Horarios/Create
+        // POST: Maquinarias/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HorarioID,ActividadesID,Dia,Hora")] Horario horario)
+        public async Task<IActionResult> Create([Bind("MaquinariaID,ActividadesID,Nombre,Cantidad")] Maquinaria maquinaria)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(horario);
+                _context.Add(maquinaria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", horario.ActividadesID);
-            return View(horario);
+            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", maquinaria.ActividadesID);
+            return View(maquinaria);
         }
 
-        // GET: Horarios/Edit/5
+        // GET: Maquinarias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -98,23 +99,23 @@ namespace SistemaAC.Controllers
                 return NotFound();
             }
 
-            var horario = await _context.Horario.SingleOrDefaultAsync(m => m.HorarioID == id);
-            if (horario == null)
+            var maquinaria = await _context.Maquinaria.SingleOrDefaultAsync(m => m.MaquinariaID == id);
+            if (maquinaria == null)
             {
                 return NotFound();
             }
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", horario.ActividadesID);
-            return View(horario);
+            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", maquinaria.ActividadesID);
+            return View(maquinaria);
         }
 
-        // POST: Horarios/Edit/5
+        // POST: Maquinarias/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HorarioID,ActividadesID,Dia,Hora")] Horario horario)
+        public async Task<IActionResult> Edit(int id, [Bind("MaquinariaID,ActividadesID,Nombre,Cantidad")] Maquinaria maquinaria)
         {
-            if (id != horario.HorarioID)
+            if (id != maquinaria.MaquinariaID)
             {
                 return NotFound();
             }
@@ -123,12 +124,12 @@ namespace SistemaAC.Controllers
             {
                 try
                 {
-                    _context.Update(horario);
+                    _context.Update(maquinaria);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HorarioExists(horario.HorarioID))
+                    if (!MaquinariaExists(maquinaria.MaquinariaID))
                     {
                         return NotFound();
                     }
@@ -139,11 +140,11 @@ namespace SistemaAC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", horario.ActividadesID);
-            return View(horario);
+            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", maquinaria.ActividadesID);
+            return View(maquinaria);
         }
 
-        // GET: Horarios/Delete/5
+        // GET: Maquinarias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -151,31 +152,31 @@ namespace SistemaAC.Controllers
                 return NotFound();
             }
 
-            var horario = await _context.Horario
-                .Include(h => h.Actividades)
-                .SingleOrDefaultAsync(m => m.HorarioID == id);
-            if (horario == null)
+            var maquinaria = await _context.Maquinaria
+                .Include(m => m.Actividades)
+                .SingleOrDefaultAsync(m => m.MaquinariaID == id);
+            if (maquinaria == null)
             {
                 return NotFound();
             }
 
-            return View(horario);
+            return View(maquinaria);
         }
 
-        // POST: Horarios/Delete/5
+        // POST: Maquinarias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var horario = await _context.Horario.SingleOrDefaultAsync(m => m.HorarioID == id);
-            _context.Horario.Remove(horario);
+            var maquinaria = await _context.Maquinaria.SingleOrDefaultAsync(m => m.MaquinariaID == id);
+            _context.Maquinaria.Remove(maquinaria);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HorarioExists(int id)
+        private bool MaquinariaExists(int id)
         {
-            return _context.Horario.Any(e => e.HorarioID == id);
+            return _context.Maquinaria.Any(e => e.MaquinariaID == id);
         }
     }
 }

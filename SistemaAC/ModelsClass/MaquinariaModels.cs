@@ -1,19 +1,19 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using SistemaAC.Data;
+using SistemaAC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using SistemaAC.Data;
-using SistemaAC.Models;
 
 namespace SistemaAC.ModelsClass
 {
-    public class HorarioModels
+    public class MaquinariaModels
     {
         private ApplicationDbContext context;
         private List<IdentityError> errorList = new List<IdentityError>();
         private string code = "", des = "";
-        public HorarioModels(ApplicationDbContext context)
+        public MaquinariaModels(ApplicationDbContext context)
         {
             this.context = context;
         }
@@ -26,21 +26,21 @@ namespace SistemaAC.ModelsClass
         {
             return context.Actividades.Where(a => a.ActividadesID == id).ToList();
         }
-        public List<Horario> getHorario(int id)
+        public List<Maquinaria> getMaquinaria(int id)
         {
-            return context.Horario.Where(c => c.HorarioID == id).ToList();
+            return context.Maquinaria.Where(c => c.MaquinariaID == id).ToList();
         }
-        public List<IdentityError> agregarHorario(int id, string dia, string hora, int actividad, string funcion)
+        public List<IdentityError> agregarMaquinaria(int id, string nombre, string cantidad, int actividad, string funcion)
         {
-            var horario = new Horario
+            var maquinaria = new Maquinaria
             {
-                Dia = dia,
-                Hora = hora,
-                ActividadesID = actividad,
+                Nombre = nombre,
+                Cantidad = cantidad,
+                ActividadesID = actividad
             };
             try
             {
-                context.Add(horario);
+                context.Add(maquinaria);
                 context.SaveChanges();
                 code = "Save";
                 des = "Save";
@@ -58,48 +58,48 @@ namespace SistemaAC.ModelsClass
             });
             return errorList;
         }
-        public List<object[]> filtrarHorario(int numPagina, string valor, string order)
+        public List<object[]> filtrarMaquinaria(int numPagina, string valor, string order)
         {
-            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 5;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 20;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
-            IEnumerable<Horario> query;
-            List<Horario> horarios = null;
+            IEnumerable<Maquinaria> query;
+            List<Maquinaria> maquinaria = null;
             switch (order)
             {
-                case "dia":
-                    horarios = context.Horario.OrderBy(c => c.Dia).ToList();
+                case "nombre":
+                    maquinaria = context.Maquinaria.OrderBy(c => c.Nombre).ToList();
                     break;
-                case "hora":
-                    horarios = context.Horario.OrderBy(c => c.Hora).ToList();
+                case "cantidad":
+                    maquinaria = context.Maquinaria.OrderBy(c => c.Cantidad).ToList();
                     break;
                 case "actividad":
-                    horarios = context.Horario.OrderBy(c => c.ActividadesID).ToList();
+                    maquinaria = context.Maquinaria.OrderBy(c => c.ActividadesID).ToList();
                     break;
 
             }
-            numRegistros = horarios.Count;
+            numRegistros = maquinaria.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
             if (valor == "null")
             {
-                query = horarios.Skip(inicio).Take(reg_por_pagina);
+                query = maquinaria.Skip(inicio).Take(reg_por_pagina);
             }
             else
             {
-                query = horarios.Where(c => c.Dia.StartsWith(valor) || c.Hora.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
+                query = maquinaria.Where(c => c.Nombre.StartsWith(valor) || c.Cantidad.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
             }
             cant = query.Count();
             foreach (var item in query)
             {
                 var actividad = getActividad(item.ActividadesID);
                 dataFilter += "<tr>" +
-                    "<td>" + item.Dia + "</td>" +
-                    "<td>" + item.Hora + "</td>" +
+                    "<td>" + item.Nombre + "</td>" +
+                    "<td>" + item.Cantidad + "</td>" +
                     "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
-                    "<a data-toggle='modal' data-target='#modalCS' onclick='editarHorario(" + item.HorarioID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
+                    "<a data-toggle='modal' data-target='#modalCS' onclick='editarHorario(" + item.MaquinariaID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
                     "</td>" +
                 "</tr>";
 
@@ -127,18 +127,18 @@ namespace SistemaAC.ModelsClass
             data.Add(dataObj);
             return data;
         }
-        public List<IdentityError> editarHorario(int id, string dia, string hora, int actividad, int funcion)
+        public List<IdentityError> editarMaquinaria(int id, string nombre, string cantidad, int actividad, int funcion)
         {
-            var horario = new Horario
+            var maquinaria = new Maquinaria
             {
-                HorarioID = id,
-                Dia = dia,
-                Hora = hora,
+                MaquinariaID = id,
+                Nombre = nombre,
+                Cantidad = cantidad,
                 ActividadesID = actividad,
             };
             try
             {
-                context.Update(horario);
+                context.Update(maquinaria);
                 context.SaveChanges();
                 code = "Save";
                 des = "Save";

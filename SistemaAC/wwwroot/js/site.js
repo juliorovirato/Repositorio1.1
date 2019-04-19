@@ -186,13 +186,16 @@ $().ready(() => {
         case "/Horarios":
             getActividades(0, 0);
             filtrarHorario(1, "dia");
+        //case "/Maquinarias":
+        //    getActividades(0, 0);
+        //    filtrarMaquinaria(1, "nombre");
     }
 });
 $('#modalCS').on('shown.bs.modal', function () {
     $('#Dia').focus()
 })
 
-var idActividad, funcion = 0, idHorario;
+var idActividad, funcion = 0, idHorario, idMaquinaria;
 /** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
@@ -276,3 +279,49 @@ var restablecer = () => {
     var horarios = new Horarios("", "", "", "");
     horarios.restablecer();
 }
+
+/** Codigo de Maquinarias 
+var getActividades = (id, fun) => {
+    var action = 'Maquinarias/getActividades';
+    var maquinarias = new Maquinarias("", "", "", action);
+    maquinarias.getActividades(id, fun);
+}
+var agregarMaquinaria = () => {
+    if (funcion == 0) {
+        var action = 'Maquinarias/agregarMaquinaria';
+    } else {
+        var action = 'Maquinarias/editarMaquinaria';
+    }
+    var nombre = document.getElementById("Nombre").value;
+    var cantidad = document.getElementById("Cantida").value;
+    var actividades = document.getElementById('ActividadMaquinarias');
+    var actividad = actividades.options[actividades.selectedIndex].value;
+    var maquinarias = new Maquinarias(nombre, cantidad, actividad, action);
+    maquinarias.agregarMaquinaria(idMaquinaria, funcion);
+    funcion = 0;
+}
+var filtrarMaquinaria = (numPagina, order) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Maquinarias/filtrarMaquinaria';
+    var maquinarias = new Maquinarias(valor, "", "", action);
+    maquinarias.filtrarMaquinaria(numPagina, order);
+}
+
+var editarMaquinaria = (id, fun) => {
+    funcion = fun;
+    idMaquinaria = id;
+    var action = 'Maquinarias/getMaquinaria';
+    var maquinarias = new Maquinarias("", "", "", action);
+    maquinarias.getMaquinaria(id, fun);
+}
+
+var editarHorario1 = () => {
+    var action = 'Maquinarias/editarMaquinaria';
+    var maquinarias = new Maquinarias("", "", "", action);
+    maquinarias.editarMaquinaria(idMaquinaria, funcion);
+}
+
+var restablecer = () => {
+    var maquinarias = new Maquinarias("", "", "", "");
+    maquinarias.restablecer();
+}*/

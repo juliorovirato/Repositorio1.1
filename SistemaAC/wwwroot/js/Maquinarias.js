@@ -1,10 +1,10 @@
 ﻿var promesa = new Promise((resolve, reject) => {
 
 });
-class Horarios {
-    constructor(dia, hora, actividad, action) {
-        this.dia = dia;
-        this.hora = hora;
+class Maquinaria {
+    constructor(nombre, cantidad, actividad, action) {
+        this.nombre = nombre;
+        this.cantidad = cantidad;
         this.actividad = actividad;
         this.action = action;
     }
@@ -17,37 +17,37 @@ class Horarios {
             data: {},
             success: (response) => {
                 //console.log(response);
-                document.getElementById('ActividadHorarios').options[0] = new Option("Seleccione un curso", 0);
+                document.getElementById('ActividadMaquinarias').options[0] = new Option("Seleccione un curso", 0);
                 if (0 < response.length) {
                     for (var i = 0; i < response.length; i++) {
                         if (0 == funcion) {
-                            document.getElementById('ActividadHorarios').options[count] = new Option(response[i].nombre, response[i].actividadesID);
+                            document.getElementById('ActividadMaquinarias').options[count] = new Option(response[i].nombre, response[i].actividadesID);
                             count++;
                         } else {
                             if (id == response[i].actividadesID) {
-                                document.getElementById('ActividadHorarios').options[0] = new Option(response[i].nombre, response[i].actividadesID);
-                                document.getElementById('ActividadHorarios').selectedIndex = 0;
+                                document.getElementById('ActividadMaquinarias').options[0] = new Option(response[i].nombre, response[i].actividadesID);
+                                document.getElementById('ActividadMaquinarias').selectedIndex = 0;
                                 break;
                             }
                         }
-                        
+
                     }
                 }
             }
         });
     }
-    agregarHorario(id, funcion) {
-        if (this.dia == "") {
-            document.getElementById("Dia").focus();
+    agregarMaquinaria(id, funcion) {
+        if (this.nombre == "") {
+            document.getElementById("Nombre").focus();
         } else {
-            if (this.hora == "") {
-                document.getElementById("Hora").focus();
+            if (this.cantidad == "") {
+                document.getElementById("Cantidad").focus();
             } else {
                 if (this.actividad == "0") {
                     document.getElementById("mensaje").innerHTML = "Seleccione una actividad";
                 } else {
-                    var dia = this.dia;
-                    var hora = this.hora;
+                    var nombre = this.nombre;
+                    var cantidad = this.cantidad;
                     var actividad = this.actividad;
                     var action = this.action;
                     //console.log(dia);
@@ -55,13 +55,13 @@ class Horarios {
                         type: "POST",
                         url: action,
                         data: {
-                            id, dia, hora, actividad, funcion
+                            id, nombre, cantidad, actividad, funcion
                         },
                         success: (response) => {
                             if ("Save" == response[0].code) {
                                 this.restablecer();
                             } else {
-                                document.getElementById("mensaje").innerHTML = "No se puede guardar el curso";
+                                document.getElementById("mensaje").innerHTML = "No se puede guardar la maquina";
                             }
                         }
                     });
@@ -69,8 +69,8 @@ class Horarios {
             }
         }
     }
-    filtrarHorario(numPagina, order) {
-        var valor = this.dia;
+    filtrarMaquinaria(numPagina, order) {
+        var valor = this.nombre;
         var action = this.action;
         if (valor == "") {
             valor = "null";
@@ -85,7 +85,7 @@ class Horarios {
             }
         });
     }
-    getHorario(id, funcion) {
+    getMaquinaria(id, funcion) {
         var action = this.action;
         $.ajax({
             type: "POST",
@@ -95,47 +95,47 @@ class Horarios {
                 console.log(response);
                 if (funcion == 0) {
                     promesa = Promise.resolve({
-                        id: response[0].horarioID,
-                        dia: response[0].dia,
-                        hora: response[0].hora,
+                        id: response[0].maquinariaID,
+                        nombre: response[0].nombre,
+                        cantidad: response[0].cantidad,
                         actividad: response[0].actividadesID
                     });
                 } else {
-                    document.getElementById("Dia").value = response[0].dia;
-                    document.getElementById("Hora").value = response[0].hora;
+                    document.getElementById("Nombre").value = response[0].nombre;
+                    document.getElementById("Cantidad").value = response[0].cantidad;
                     getActividades(response[0].actividadesID, 1);
                 }
             }
         });
     }
-    editarHorarios(id, funcion) {
-        var dia, hora, actividad;
+    editarMaquinaria(id, funcion) {
+        var nombre, cantidad, actividad;
         var action = this.action;
         promesa.then(data => {
             //id = data.id;
-            dia = data.dia;
-            hora = data.hora;
+            nombre = data.nombre;
+            cantidad = data.cantidad;
             actividad = data.actividadesID;
             $.ajax({
                 type: "POST",
                 url: action,
-                data: { id, dia, hora, actividad, funcion },
+                data: { id, nombre, cantidad, actividad, funcion },
                 success: (response) => {
                     if (response[0].code == "Save") {
                         this.restablecer();
                     } else {
-                        document.getElementById("titleHorario").innerHTML = response[0].description;
+                        document.getElementById("titleMaquinaria").innerHTML = response[0].description;
                     }
                 }
             });
         });
     }
     restablecer() {
-        document.getElementById("Dia").value = "";
-        document.getElementById("Hora").value = "";
-        document.getElementById('ActividadHorarios').selectedIndex = 0;
+        document.getElementById("Nombre").value = "";
+        document.getElementById("Cantidad").value = "";
+        document.getElementById('ActividadMaquinarias').selectedIndex = 0;
         document.getElementById("mensaje").innerHTML = "";
-        filtrarHorario(1, "dia");
+        filtrarMaquinaria(1, "nombre");
         $('#modalCS').modal('hide');
         $('#ModalHorario').modal('hide');
     }

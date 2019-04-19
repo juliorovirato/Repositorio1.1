@@ -28,5 +28,7 @@ namespace SistemaAC.Data
         public DbSet<SistemaAC.Models.Actividades> Actividades { get; set; }
 
         public DbSet<SistemaAC.Models.Horario> Horario { get; set; }
+
+        public DbSet<SistemaAC.Models.Maquinaria> Maquinaria { get; set; }
     }
 }
