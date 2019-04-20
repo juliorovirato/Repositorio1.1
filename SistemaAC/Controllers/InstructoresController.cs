@@ -12,18 +12,18 @@ using SistemaAC.ModelsClass;
 
 namespace SistemaAC.Controllers
 {
-    public class InstructorsController : Controller
+    public class InstructoresController : Controller
     {
         private readonly ApplicationDbContext _context;
         private InstructoresModels instructor;
 
-        public InstructorsController(ApplicationDbContext context)
+        public InstructoresController(ApplicationDbContext context)
         {
             _context = context;
             instructor = new InstructoresModels(context);
         }
 
-        // GET: Instructors
+        // GET: Instructores
         public async Task<IActionResult> Index()
         {
             return View(await _context.Instructor.ToListAsync());
@@ -32,9 +32,11 @@ namespace SistemaAC.Controllers
         {
             return instructor.guardarInstructor(id, especialidad, nombre, apellido, documento, email, telefono, estado, funcion);
         }
-
-
-        // GET: Instructors/Details/5
+        public List<object[]> filtrarInstructores(int numPagina, string valor, string order)
+        {
+            return instructor.filtrarInstructores(numPagina, valor, order);
+        }
+        // GET: Instructores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,13 +54,13 @@ namespace SistemaAC.Controllers
             return View(instructor);
         }
 
-        // GET: Instructors/Create
+        // GET: Instructores/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Instructors/Create
+        // POST: Instructores/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -74,7 +76,7 @@ namespace SistemaAC.Controllers
             return View(instructor);
         }
 
-        // GET: Instructors/Edit/5
+        // GET: Instructores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -90,7 +92,7 @@ namespace SistemaAC.Controllers
             return View(instructor);
         }
 
-        // POST: Instructors/Edit/5
+        // POST: Instructores/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -125,7 +127,7 @@ namespace SistemaAC.Controllers
             return View(instructor);
         }
 
-        // GET: Instructors/Delete/5
+        // GET: Instructores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -143,7 +145,7 @@ namespace SistemaAC.Controllers
             return View(instructor);
         }
 
-        // POST: Instructors/Delete/5
+        // POST: Instructores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

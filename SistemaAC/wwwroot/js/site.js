@@ -195,6 +195,9 @@ $().ready(() => {
             getActividadesT(0, 0);
             filtrarTarifa(1, "valorEst");
             break;
+        case "/Instructores":
+            filtrarInstructores(1, "especialidad");
+            break;
     }
 });
 $('#modalCS').on('shown.bs.modal', function () {
@@ -400,4 +403,9 @@ var guardarInstructor = () => {
     var telefono = document.getElementById("Telefono").value;
     var estado = document.getElementById("Estado").checked
     instructores.guardarInstructor(id, funcion, action, especialidad, nombre, apellido, documento, email, telefono, estado);
+}
+var filtrarInstructores = (numPagina, order) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Instructores/filtrarInstructores';
+    instructores.filtrarInstructores(numPagina, valor, order, action);
 }
