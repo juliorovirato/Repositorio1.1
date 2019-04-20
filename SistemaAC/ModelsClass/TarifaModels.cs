@@ -108,7 +108,7 @@ namespace SistemaAC.ModelsClass
                     "<td>" + item.ValorGrad + "</td>" +
                     "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
-                    "<a data-toggle='modal' data-target='#modalCS' onclick='editarTarifa(" + item.TarifaID + ',' + 1 + ")'  class='btn btn-success'>Edit</a>" +
+                    "<a data-toggle='modal' data-target='#modalES' onclick='editarTarifa(" + item.TarifaID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
                     "</td>" +
                 "</tr>";
 

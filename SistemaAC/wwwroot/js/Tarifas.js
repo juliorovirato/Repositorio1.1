@@ -154,7 +154,7 @@ class Tarifas {
         document.getElementById("ValorGrad").value = "";
         document.getElementById('ActividadTarifas').selectedIndex = 0;
         document.getElementById("mensaje").innerHTML = "";
-        filtrarCurso(1, "valorEst");
+        filtrarTarifa(1, "valorEst");
         $('#modalES').modal('hide');
         $('#ModalTarifas').modal('hide');
     }

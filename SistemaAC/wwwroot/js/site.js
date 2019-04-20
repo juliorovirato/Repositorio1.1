@@ -331,8 +331,8 @@ var editarMaquinaria = (id, fun) => {
 }
 var editarMaquinaria1 = () => {
     var action = 'Maquinarias/editarMaquinaria';
-    var maquinaras = new Maqinaria("", "", "", action);
-    maquinarias.editarMaquinaria(idMaquinaria, funcion);
+    var maquinaras = new Maquinaria("", "", "", action);
+    maquinaras.editarMaquinaria(idMaquinaria, funcion);
 }
 var restablecer = () => {
     var maquinarias = new Maquinaria("", "", "", "");
