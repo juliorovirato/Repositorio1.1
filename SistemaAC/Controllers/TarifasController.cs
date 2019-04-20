@@ -2,159 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaAC.Data;
 using SistemaAC.Models;
+using SistemaAC.ModelsClass;
 
 namespace SistemaAC.Controllers
 {
     public class TarifasController : Controller
     {
         private readonly ApplicationDbContext _context;
-
+        private TarifaModels tarifasModels;
         public TarifasController(ApplicationDbContext context)
         {
             _context = context;
+            tarifasModels = new TarifaModels(context);
         }
 
         // GET: Tarifas
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Tarifas.Include(t => t.Actividades);
-            return View(await applicationDbContext.ToListAsync());
-        }
-
-        // GET: Tarifas/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tarifas = await _context.Tarifas
-                .Include(t => t.Actividades)
-                .SingleOrDefaultAsync(m => m.TarifaID == id);
-            if (tarifas == null)
-            {
-                return NotFound();
-            }
-
-            return View(tarifas);
-        }
-
-        // GET: Tarifas/Create
-        public IActionResult Create()
-        {
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID");
             return View();
         }
-
-        // POST: Tarifas/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TarifaID,ActividadesID,ValorEst,ValorEmp,ValorFam,ValorGrad")] Tarifas tarifas)
+        public List<Actividades> getActividadesT()
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tarifas);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", tarifas.ActividadesID);
-            return View(tarifas);
+            return tarifasModels.getActividadesT();
         }
-
-        // GET: Tarifas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public List<IdentityError> agregarTarifa(int id, double valorEst, double valorEmp, double valorFam, double valorGrad, int actividad, string funcion)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tarifas = await _context.Tarifas.SingleOrDefaultAsync(m => m.TarifaID == id);
-            if (tarifas == null)
-            {
-                return NotFound();
-            }
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", tarifas.ActividadesID);
-            return View(tarifas);
+            return tarifasModels.agregarTarifa(id, valorEst, valorEmp, valorFam, valorGrad, actividad, funcion);
         }
-
-        // POST: Tarifas/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TarifaID,ActividadesID,ValorEst,ValorEmp,ValorFam,ValorGrad")] Tarifas tarifas)
+        public List<object[]> filtrarTarifa(int numPagina, string valor, string order)
         {
-            if (id != tarifas.TarifaID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tarifas);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TarifasExists(tarifas.TarifaID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ActividadesID"] = new SelectList(_context.Actividades, "ActividadesID", "ActividadesID", tarifas.ActividadesID);
-            return View(tarifas);
+            return tarifasModels.filtrarTarifa(numPagina, valor, order);
         }
-
-        // GET: Tarifas/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public List<Tarifas> getTarifas(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tarifas = await _context.Tarifas
-                .Include(t => t.Actividades)
-                .SingleOrDefaultAsync(m => m.TarifaID == id);
-            if (tarifas == null)
-            {
-                return NotFound();
-            }
-
-            return View(tarifas);
+            return tarifasModels.getTarifas(id);
         }
-
-        // POST: Tarifas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public List<IdentityError> editarTarifa(int id, double valorEst, double valorEmp, double valorFam, double valorGrad, int actividad, int funcion)
         {
-            var tarifas = await _context.Tarifas.SingleOrDefaultAsync(m => m.TarifaID == id);
-            _context.Tarifas.Remove(tarifas);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool TarifasExists(int id)
-        {
-            return _context.Tarifas.Any(e => e.TarifaID == id);
+            return tarifasModels.editarTarifa(id, valorEst, valorEmp, valorFam, valorGrad, actividad, funcion);
         }
     }
 }

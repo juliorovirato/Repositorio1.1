@@ -186,9 +186,15 @@ $().ready(() => {
         case "/Horarios":
             getActividades(0, 0);
             filtrarHorario(1, "dia");
+            break;
         case "/Maquinarias":
             getActividadesM(0, 0);
             filtrarMaquinaria(1, "nombre");
+            break;
+        case "/Tarifas":
+            getActividadesT(0, 0);
+            filtrarTarifa(1, "valorEst");
+            break;
     }
 });
 $('#modalCS').on('shown.bs.modal', function () {
@@ -197,11 +203,14 @@ $('#modalCS').on('shown.bs.modal', function () {
 $('#modalDS').on('shown.bs.modal', function () {
     $('#Nombre').focus()
 })
+$('#modalES').on('shown.bs.modal', function () {
+    $('#ValorEst').focus()
+})
 $('#modalAS').on('shown.bs.modal', function () {
     $('#Especialidad').focus()
 })
 
-var idActividad, funcion = 0, idHorario, idMaquinaria;
+var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa;
 /** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
@@ -322,13 +331,60 @@ var editarMaquinaria = (id, fun) => {
 }
 var editarMaquinaria1 = () => {
     var action = 'Maquinarias/editarMaquinaria';
-    var cursos = new Cursos("", "", "", action);
+    var maquinaras = new Maqinaria("", "", "", action);
     maquinarias.editarMaquinaria(idMaquinaria, funcion);
 }
 var restablecer = () => {
     var maquinarias = new Maquinaria("", "", "", "");
     maquinarias.restablecer();
 }
+
+/** Codigo de Tarifas */
+var getActividadesT = (id, fun) => {
+    var action = 'Tarifas/getActividadesT';
+    var tarifa = new Tarifas("", "", "", "", "", action);
+    tarifa.getActividadesT(id, fun);
+}
+var agregarTarifa = () => {
+    if (funcion == 0) {
+        var action = 'Tarifas/agregarTarifa';
+    } else {
+        var action = 'Tarifas/editarTarifa';
+    }
+
+    var valorEst = document.getElementById("ValorEst").value;
+    var valorEmp = document.getElementById("ValorEmp").value;
+    var valorFam = document.getElementById("ValorFam").value;
+    var valorGrad = document.getElementById("ValorGrad").value;
+    var actividades = document.getElementById('ActividadTarifas');
+    var actividad = actividades.options[actividades.selectedIndex].value;
+    var tarifa = new Tarifas(valorEst, valorEmp, valorFam, valorGrad, actividad, action);
+    tarifa.agregarTarifa(idTarifa, funcion);
+    funcion = 0;
+}
+var filtrarTarifa = (numPagina, order) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Tarifas/filtrarTarifa';
+    var tarifa = new Tarifas(valor, "", "", "", "", action);
+    tarifa.filtrarTarifa(numPagina, order);
+}
+var editarTarifa = (id, fun) => {
+    funcion = fun;
+    idTarifa = id;
+    var action = 'Tarifas/getTarifas';
+    var tarifa = new Tarifas("", "", "", "", "", action);
+    tarifa.getTarifas(id, fun);
+}
+var editarTarifa1 = () => {
+    var action = 'Tarifas/editarTarifa';
+    var tarifa = new Tarifas("", "", "", "", "", action);
+    tarifa.editarTarifa(idTarifa, funcion);
+}
+var restablecer = () => {
+    var tarifa = new Tarifas("", "", "", "", "", "");
+    tarifa.restablecer();
+}
+
 var instructores = new Instructores();
 /** Codigo de Instructores */
 var guardarInstructor = () => {
