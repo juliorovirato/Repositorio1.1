@@ -412,7 +412,7 @@ var deleteTarifa = (id) => {
 var deleteTarifas = () => {
     var action = 'Tarifas/deleteTarifa';
     var tarifa = new Tarifas("", "", "", "", "", action);
-    tarifa.editarTarifa(idTarifa, action);
+    tarifa.deleteTarifa(idTarifa, action);
     idTarifa = 0;
 }
 
