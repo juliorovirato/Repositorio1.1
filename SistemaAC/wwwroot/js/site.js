@@ -196,7 +196,7 @@ $().ready(() => {
             filtrarTarifa(1, "valorEst");
             break;
         case "/Instructores":
-            filtrarInstructores(1, "especialidad");
+            filtrarInstructores(1, "nombre");
             break;
     }
 });
@@ -213,7 +213,8 @@ $('#modalAS').on('shown.bs.modal', function () {
     $('#Especialidad').focus()
 })
 
-var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa, idInstructor = 0;
+var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa;
+var idInstructor = 0;
 /** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
@@ -389,7 +390,7 @@ var restablecer = () => {
 }
 
 /** Codigo de Instructores */
-var instructores = new Instructores();
+var instructor = new Instructores();  
 var guardarInstructor = () => {
 
     var action = 'Instructores/guardarInstructor';
@@ -400,16 +401,25 @@ var guardarInstructor = () => {
     var email = document.getElementById("Email").value;
     var telefono = document.getElementById("Telefono").value;
     var estado = document.getElementById("Estado").checked
-    instructores.guardarInstructor(idInstructor, funcion, action, especialidad, nombre, apellido, documento, email, telefono, estado);
-    idInstructor = 0;
+    instructor.guardarInstructor(idInstructor, funcion, action, especialidad, nombre, apellido, documento, email, telefono, estado);
+    idInstructor = 0;  
 }
 var filtrarInstructores = (numPagina, order) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Instructores/filtrarInstructores';
-    instructores.filtrarInstructores(numPagina, valor, order, action);
-}
+    instructor.filtrarInstructores(numPagina, valor, order, action);
+} 
 var editarInstructor = (id, fun) => {
     idInstructor = id;
+    funcion = fun;
     var action = 'Instructores/getInstructor';
-    instructores.getInstructor(id, fun, action);
+    instructor.getInstructor(id, fun, action);  
+}
+var deleteInstructor = (id) => {
+    idInstructor = id;
+}
+var deleteInstructores = () => {
+    var action = 'Instructores/deleteInstructor';
+    instructor.deleteInstructor(idInstructor, action);
+    idInstructor = 0;
 }

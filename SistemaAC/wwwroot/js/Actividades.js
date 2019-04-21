@@ -62,8 +62,8 @@ class Actividades {
                 console.log(response);
                 $.each(response, (index, val) => {
 
-                    $("#resultSearch").html(val[0]);
-                    $("#paginado").html(val[1]);
+                    $("#resultSearch").html(response[0][0]);
+                    $("#paginado").html(response[0][1]);
                 });
 
             }

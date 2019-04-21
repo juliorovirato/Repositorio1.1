@@ -3,7 +3,7 @@ class Instructores {
     constructor() {
 
     }
-    guardarEstudiante(id, funcion, ...data) {
+    guardarInstructor(id, funcion, ...data) {
         var action = data[0];
         var response = new Array({
             apellidos: data[3], especialidad: data[1], documento: data[4], email: data[5],
@@ -53,8 +53,8 @@ class Instructores {
             action,
             { valor, numPagina, order },
             (response) => {
-                $("#resultSearch").html(response[0]);
-                $("#paginado").html(response[1]);
+                $("#resultSearch").html(response[0][0]);
+                $("#paginado").html(response[0][1]);
             });
     }
     getInstructor(id, funcion, action) {
@@ -92,6 +92,18 @@ class Instructores {
                 console.log(response);
 
             });
+    } 
+    deleteInstructor(id, action) {
+        $.post(
+            action,
+            {
+                id
+            },
+            (response) => {
+
+                console.log(response);
+                this.restablecer();
+            });
     }
     restablecer() {
         document.getElementById("Especialidad").value = "";
@@ -101,7 +113,8 @@ class Instructores {
         document.getElementById("Email").value = "";
         document.getElementById("Telefono").value = "";
         document.getElementById("Estado").checked = false;
-        filtrarInstructores(1, "");
+        filtrarInstructores(1, "nombre");
         $('#modalAS').modal('hide');
+        $('#ModalDeleteAS').modal('hide');
     }
 }

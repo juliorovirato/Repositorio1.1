@@ -17,11 +17,11 @@ namespace SistemaAC.ModelsClass
         public InstructoresModels(ApplicationDbContext context)
         {
             this.context = context;
-            identityError = new List<IdentityError>();
+            identityError = new List<IdentityError>(); 
         }
         public List<Instructor> getInstructor(int id)
         {
-            return context.Instructor.Where(c => c.ID == id).ToList();
+            return context.Instructor.Where(c => c.ID == id).ToList(); 
         }
         public List<IdentityError> guardarInstructor(List<Instructor> response, int funcion)
         {
@@ -41,8 +41,8 @@ namespace SistemaAC.ModelsClass
             {
                 ID = response[0].ID,
                 Especialidad = response[0].Especialidad,
-                Nombres = response[0].Nombres,
                 Apellidos = response[0].Apellidos,
+                Nombres = response[0].Nombres,
                 Documento = response[0].Documento,
                 Email = response[0].Email,
                 Telefono = response[0].Telefono,
@@ -65,48 +65,25 @@ namespace SistemaAC.ModelsClass
                 Code = code,
                 Description = des
             });
-            return identityError;
+            return identityError; 
         }
         public List<object[]> filtrarInstructores(int numPagina, string valor, string order)
         {
-            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 6;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 3;
             int can_paginas, pagina = 0, count = 1;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
             IEnumerable<Instructor> query;
             List<Instructor> instructores = null;
-            switch (order)
-            {
-                case "especialidad":
-                    instructores = context.Instructor.OrderBy(c => c.Especialidad).ToList();
-                    break;
-                case "nombre":
-                    instructores = context.Instructor.OrderBy(c => c.Nombres).ToList();
-                    break;
-                case "apellidos":
-                    instructores = context.Instructor.OrderBy(c => c.Apellidos).ToList();
-                    break;
-                case "documento":
-                    instructores = context.Instructor.OrderBy(c => c.Documento).ToList();
-                    break;
-                case "email":
-                    instructores = context.Instructor.OrderBy(c => c.Email).ToList();
-                    break;
-                case "telefono":
-                    instructores = context.Instructor.OrderBy(c => c.Telefono).ToList();
-                    break;
-                case "estado":
-                    instructores = context.Instructor.OrderBy(c => c.Estado).ToList();
-                    break;
 
-            }
+            instructores = context.Instructor.OrderBy(p => p.Nombres).ToList();
             numRegistros = instructores.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
             if (valor == "null")
                 query = instructores.Skip(inicio).Take(reg_por_pagina);
             else
-                query = instructores.Where(p => p.Especialidad.StartsWith(valor) || p.Documento.StartsWith(valor) || p.Nombres.StartsWith(valor) || p.Apellidos.StartsWith(valor) || p.Telefono.StartsWith(valor) || p.Email.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
+                query = instructores.Where(p => p.Documento.StartsWith(valor) || p.Nombres.StartsWith(valor) || p.Apellidos.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
             cant = query.Count();
             foreach (var item in query)
             {
@@ -127,13 +104,62 @@ namespace SistemaAC.ModelsClass
                    "<a data-toggle='modal' data-target='#modalAS' onclick='editarInstructor(" + item.ID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
                    "</td>" +
                    "<td>" +
-                   "<a data-toggle='modal' data-target='#modalAS' onclick='editarInstructor(" + item.ID + ',' + 1 + ")'  class='btn btn-danger'>Eliminar</a>" +
+                   "<a data-toggle='modal' data-target='#ModalDeleteAS' onclick='deleteInstructor(" + item.ID + ")'  class='btn btn-danger'>Eliminar</a>" +
                    "</td>" +
                "</tr>";
             }
+            if (valor == "null")
+            {
+                if (numPagina > 1)
+                {
+                    pagina = numPagina - 1;
+                    paginador += "<a class='btn btn-default' onclick='filtrarInstructores(" + 1 + ',' + '"' + order + '"' + ")'> << </a>" +
+                    "<a class='btn btn-default' onclick='filtrarInstructores(" + pagina + ',' + '"' + order + '"' + ")'> < </a>";
+                }
+                if (1 < can_paginas)
+                {
+                    for(int i = numPagina; i <= can_paginas; i++)
+                    {
+                        paginador += "<strong class='btn btn-success' onclick='filtrarInstructores(" + i + ',' + '"' + order + '"' + ")'>" + i + "</strong>";
+                        if (count == 5)
+                        {
+                            break;
+                        }
+                        count++;
+                    }
+                }
+                if (numPagina < can_paginas)
+                {
+                    pagina = numPagina + 1;
+                    paginador += "<a class='btn btn-default' onclick='filtrarInstructores(" + pagina + ',' + '"' + order + '"' + ")'>  > </a>" +
+                                 "<a class='btn btn-default' onclick='filtrarInstructores(" + can_paginas + ',' + '"' + order + '"' + ")'> >> </a>";
+                }
+            }
             object[] dataObj = { dataFilter, paginador };
             data.Add(dataObj);
-            return data;
+            return data; 
+        }
+        internal List<IdentityError> deleteInstructor(int id)
+        {
+            var instructor = context.Instructor.SingleOrDefault(m => m.ID == id);
+            if (instructor == null)
+            {
+                code = "0";
+                des = "Not";
+            }
+            else
+            {
+                context.Instructor.Remove(instructor);
+                context.SaveChanges();
+                code = "1";
+                des = "Delete";
+            }
+            identityError.Add(new IdentityError
+            {
+                Code = code,
+                Description = des
+            });
+            return identityError;
         }
     }
 }
