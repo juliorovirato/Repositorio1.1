@@ -213,7 +213,7 @@ $('#modalAS').on('shown.bs.modal', function () {
     $('#Especialidad').focus()
 })
 
-var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa;
+var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa, idInstructor;
 /** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
@@ -391,10 +391,7 @@ var restablecer = () => {
 var instructores = new Instructores();
 /** Codigo de Instructores */
 var guardarInstructor = () => {
-    if (funcion == 0) {
-        var action = 'Instructores/guardarInstructor';
-    }
-    var id = 0;
+    var action = 'Instructores/guardarInstructor';
     var especialidad = document.getElementById("Especialidad").value;
     var nombre = document.getElementById("Nombre").value;
     var apellido = document.getElementById("Apellidos").value;
@@ -402,10 +399,16 @@ var guardarInstructor = () => {
     var email = document.getElementById("Email").value;
     var telefono = document.getElementById("Telefono").value;
     var estado = document.getElementById("Estado").checked
-    instructores.guardarInstructor(id, funcion, action, especialidad, nombre, apellido, documento, email, telefono, estado);
+    instructores.guardarInstructor(idInstructor, funcion, action, especialidad, nombre, apellido, documento, email, telefono, estado);
+    idInstructor = 0;
 }
 var filtrarInstructores = (numPagina, order) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Instructores/filtrarInstructores';
     instructores.filtrarInstructores(numPagina, valor, order, action);
+}
+var editarInstructor = (id, fun) => {
+    idInstructor = id;
+    var action = 'Instructores/getInstructor';
+    instructores.getInstructor(idInstructor, funcion, action);
 }

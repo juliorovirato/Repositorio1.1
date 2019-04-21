@@ -28,13 +28,17 @@ namespace SistemaAC.Controllers
         {
             return View(await _context.Instructor.ToListAsync());
         }
-        public List<IdentityError> guardarInstructor(int id, string especialidad, string nombre, string apellido, string documento, string email, string telefono, Boolean estado, int funcion)
+        public List<IdentityError> guardarInstructor(List<Instructor> response, int funcion)
         {
-            return instructor.guardarInstructor(id, especialidad, nombre, apellido, documento, email, telefono, estado, funcion);
+            return instructor.guardarInstructor(response, funcion);
         }
         public List<object[]> filtrarInstructores(int numPagina, string valor, string order)
         {
             return instructor.filtrarInstructores(numPagina, valor, order);
+        }
+        public List<Instructor> getInstructor(int id)
+        {
+            return instructor.getInstructor(id);
         }
         // GET: Instructores/Details/5
         public async Task<IActionResult> Details(int? id)

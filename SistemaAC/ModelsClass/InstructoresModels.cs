@@ -13,23 +13,40 @@ namespace SistemaAC.ModelsClass
         private ApplicationDbContext context;
         private List<IdentityError> identityError;
         private string code = "", des = "";
+        private Boolean estados;
         public InstructoresModels(ApplicationDbContext context)
         {
             this.context = context;
             identityError = new List<IdentityError>();
         }
-        public List<IdentityError> guardarInstructor(int id, string especialidad, string nombre, string apellido, string documento, string email, string telefono, Boolean estado, int funcion)
+        public List<Instructor> getInstructor(int id)
         {
+            return context.Instructor.Where(c => c.ID == id).ToList();
+        }
+        public List<IdentityError> guardarInstructor(List<Instructor> response, int funcion)
+        {
+            switch (funcion)
+            {
+                case 0:
+                    if (response[0].Estado)
+                        estados = false;
+                    else
+                        estados = true;
+                    break;
+                case 1:
+                    estados = response[0].Estado;
+                    break;
+            }
             var instructor = new Instructor
             {
-                ID = id,
-                Especialidad = especialidad,
-                Nombres = nombre,
-                Apellidos = apellido,
-                Documento = documento,
-                Email = email,
-                Telefono = telefono,
-                Estado = estado
+                ID = response[0].ID,
+                Especialidad = response[0].Especialidad,
+                Nombres = response[0].Nombres,
+                Apellidos = response[0].Apellidos,
+                Documento = response[0].Documento,
+                Email = response[0].Email,
+                Telefono = response[0].Telefono,
+                Estado = estados
             };
             try
             {
