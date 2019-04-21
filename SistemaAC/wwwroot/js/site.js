@@ -213,7 +213,7 @@ $('#modalAS').on('shown.bs.modal', function () {
     $('#Especialidad').focus()
 })
 
-var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa, idInstructor;
+var idActividad, funcion = 0, idHorario, idMaquinaria, idTarifa, idInstructor = 0;
 /** Codigo de Actividades */
 var agregarActividad = () => {
     var nombre = document.getElementById("Nombre").value;
@@ -388,9 +388,10 @@ var restablecer = () => {
     tarifa.restablecer();
 }
 
-var instructores = new Instructores();
 /** Codigo de Instructores */
+var instructores = new Instructores();
 var guardarInstructor = () => {
+
     var action = 'Instructores/guardarInstructor';
     var especialidad = document.getElementById("Especialidad").value;
     var nombre = document.getElementById("Nombre").value;
@@ -410,5 +411,5 @@ var filtrarInstructores = (numPagina, order) => {
 var editarInstructor = (id, fun) => {
     idInstructor = id;
     var action = 'Instructores/getInstructor';
-    instructores.getInstructor(idInstructor, funcion, action);
+    instructores.getInstructor(id, fun, action);
 }

@@ -74,63 +74,62 @@ namespace SistemaAC.ModelsClass
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
             IEnumerable<Instructor> query;
-            List<Instructor> instructor = null;
+            List<Instructor> instructores = null;
             switch (order)
             {
                 case "especialidad":
-                    instructor = context.Instructor.OrderBy(c => c.Especialidad).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Especialidad).ToList();
                     break;
                 case "nombre":
-                    instructor = context.Instructor.OrderBy(c => c.Nombres).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Nombres).ToList();
                     break;
                 case "apellidos":
-                    instructor = context.Instructor.OrderBy(c => c.Apellidos).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Apellidos).ToList();
                     break;
                 case "documento":
-                    instructor = context.Instructor.OrderBy(c => c.Documento).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Documento).ToList();
                     break;
                 case "email":
-                    instructor = context.Instructor.OrderBy(c => c.Email).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Email).ToList();
                     break;
                 case "telefono":
-                    instructor = context.Instructor.OrderBy(c => c.Telefono).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Telefono).ToList();
                     break;
                 case "estado":
-                    instructor = context.Instructor.OrderBy(c => c.Estado).ToList();
+                    instructores = context.Instructor.OrderBy(c => c.Estado).ToList();
                     break;
 
             }
-            numRegistros = instructor.Count;
+            numRegistros = instructores.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
             if (valor == "null")
-                query = instructor.Skip(inicio).Take(reg_por_pagina);
+                query = instructores.Skip(inicio).Take(reg_por_pagina);
             else
-                query = instructor.Where(p => p.Especialidad.StartsWith(valor) || p.Nombres.StartsWith(valor) || 
-                p.Apellidos.StartsWith(valor) || p.Documento.StartsWith(valor) || p.Email.StartsWith(valor)
-                || p.Telefono.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
+                query = instructores.Where(p => p.Especialidad.StartsWith(valor) || p.Documento.StartsWith(valor) || p.Nombres.StartsWith(valor) || p.Apellidos.StartsWith(valor) || p.Telefono.StartsWith(valor) || p.Email.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
             cant = query.Count();
-            foreach(var item in query)
+            foreach (var item in query)
             {
                 if (item.Estado == true)
                     Estado = "<a onclick='editarInstructor(" + item.ID + ',' + 0 + ")' class='btn btn-success'>Activo</a>";
                 else
                     Estado = "<a onclick='editarInstructor(" + item.ID + ',' + 0 + ")' class='btn btn-danger'>No activo</a>";
+
                 dataFilter += "<tr>" +
-                    "<td>" + item.Especialidad + "</td>" +
-                    "<td>" + item.Documento + "</td>" +
-                    "<td>" + item.Nombres + "</td>" +
-                    "<td>" + item.Apellidos + "</td>" +
-                    "<td>" + item.Telefono + "</td>" +
-                    "<td>" + item.Email + "</td>" +
-                    "<td>" + Estado + "</td>" +
-                    "<td>" +
-                    "<a data-toggle='modal' data-target='#modalAS' onclick='editarInstructor(" + item.ID + ',' + 1 + ")' class='btn btn-success'>Editar</a>" +
-                    "</td>" +
-                    "<td>" +
-                    "<a data-toggle='modal' data-target='#modalAS' onclick='editarInstructor(" + item.ID + ',' + 1 + ")' class='btn btn-danger'>Eliminar</a>" +
-                    "</td>" +
-                 "</tr>";
+                   "<td>" + item.Especialidad + "</td>" +
+                   "<td>" + item.Documento + "</td>" +
+                   "<td>" + item.Nombres + "</td>" +
+                   "<td>" + item.Apellidos + "</td>" +
+                   "<td>" + item.Telefono + "</td>" +
+                   "<td>" + item.Email + "</td>" +
+                   "<td>" + Estado + " </td>" +
+                   "<td>" +
+                   "<a data-toggle='modal' data-target='#modalAS' onclick='editarInstructor(" + item.ID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
+                   "</td>" +
+                   "<td>" +
+                   "<a data-toggle='modal' data-target='#modalAS' onclick='editarInstructor(" + item.ID + ',' + 1 + ")'  class='btn btn-danger'>Eliminar</a>" +
+                   "</td>" +
+               "</tr>";
             }
             object[] dataObj = { dataFilter, paginador };
             data.Add(dataObj);

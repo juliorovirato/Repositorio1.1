@@ -3,29 +3,29 @@ class Instructores {
     constructor() {
 
     }
-    guardarInstructor(id, funcion, ...data) {
+    guardarEstudiante(id, funcion, ...data) {
         var action = data[0];
         var response = new Array({
-            apellidos: data[3], documento: data[4], email: data[5], especialidad: data[1],
-            estado: data[7], id: id, nombres: data[2], telefono: data[6]
+            apellidos: data[3], especialidad: data[1], documento: data[4], email: data[5],
+            estado: data[7], nombres: data[2], id: id, telefono: data[6]
         });
         if (data[1] == "") {
-            document.getElementById("Especialidad").focus;
+            document.getElementById("Especialidad").focus()
         } else {
             if (data[2] == "") {
-                document.getElementById("Nombre").focus;
+                document.getElementById("Nombre").focus()
             } else {
                 if (data[3] == "") {
-                    document.getElementById("Apellidos").focus;
+                    document.getElementById("Apellidos").focus()
                 } else {
                     if (data[4] == "") {
-                        document.getElementById("Documento").focus;
+                        document.getElementById("Documento").focus()
                     } else {
                         if (data[5] == "") {
-                            document.getElementById("Email").focus;
+                            document.getElementById("Email").focus()
                         } else {
                             if (data[6] == "") {
-                                document.getElementById("Telefono").focus;
+                                document.getElementById("Telefono").focus()
                             } else {
                                 $.post(
                                     action,
@@ -48,15 +48,14 @@ class Instructores {
         }
     }
     filtrarInstructores(numPagina, valor, order, action) {
-        valor = (valor == "") ? "null" : valor; //Ternario
+        valor = (valor == "") ? "null" : valor;//Ternario
         $.post(
             action,
-            {valor, numPagina, order},
+            { valor, numPagina, order },
             (response) => {
                 $("#resultSearch").html(response[0]);
                 $("#paginado").html(response[1]);
-            }
-        );
+            });
     }
     getInstructor(id, funcion, action) {
         $.post(
@@ -78,8 +77,7 @@ class Instructores {
                 }
                 var action = 'Instructores/guardarInstructor';
                 this.editarInstructor(response, funcion, action)
-            }
-        );
+            });
     }
     editarInstructor(response, funcion, action) {
         $.post(
@@ -92,8 +90,8 @@ class Instructores {
                     this.restablecer();
                 }
                 console.log(response);
-            }
-        );
+
+            });
     }
     restablecer() {
         document.getElementById("Especialidad").value = "";
