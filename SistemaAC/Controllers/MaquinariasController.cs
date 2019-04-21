@@ -48,5 +48,9 @@ namespace SistemaAC.Controllers
         {
             return maquinariaModels.editarMaquinaria(id, nombre, cantidad, actividad, funcion);
         }
+        public List<IdentityError> deleteMaquinaria(int id)
+        {
+            return maquinariaModels.deleteMaquinaria(id);
+        }
     }
 }

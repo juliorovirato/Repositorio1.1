@@ -147,6 +147,18 @@ class Tarifas {
             });
         });
     }
+    deleteTarifa(id, action) {
+        $.post(
+            action,
+            {
+                id
+            },
+            (response) => {
+
+                console.log(response);
+                this.restablecer();
+            });
+    }
     restablecer() {
         document.getElementById("ValorEst").value = "";
         document.getElementById("ValorEmp").value = "";
@@ -157,5 +169,6 @@ class Tarifas {
         filtrarTarifa(1, "valorEst");
         $('#modalES').modal('hide');
         $('#ModalTarifas').modal('hide');
+        $('#ModalDeleteES').modal('hide');
     }
 }

@@ -47,5 +47,9 @@ namespace SistemaAC.Controllers
         {
             return tarifasModels.editarTarifa(id, valorEst, valorEmp, valorFam, valorGrad, actividad, funcion);
         }
+        public List<IdentityError> deleteTarifa(int id)
+        {
+            return tarifasModels.deleteTarifa(id);
+        }
     }
 }

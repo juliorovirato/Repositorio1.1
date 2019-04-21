@@ -62,12 +62,12 @@ namespace SistemaAC.ModelsClass
                     break;
             }
             numRegistros = actividades.Count;
-            if((numRegistros % reg_por_pagina) > 0)
+            inicio = (numPagina - 1) * reg_por_pagina;
+            can_paginas = (numRegistros / reg_por_pagina);
+            if ((numRegistros % reg_por_pagina) > 0)
             {
                 numRegistros += 1;
             }
-            inicio = (numPagina - 1) * reg_por_pagina;
-            can_paginas = (numRegistros / reg_por_pagina);
             if (valor == "null")
             {
                 query = actividades.Skip(inicio).Take(reg_por_pagina);

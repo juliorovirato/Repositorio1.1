@@ -298,6 +298,15 @@ var restablecer = () => {
     var horarios = new Horarios("", "", "", "");
     horarios.restablecer();
 }
+var deleteHorario = (id) => {
+    idHorario = id;
+}
+var deleteHorarios = () => {
+    var action = 'Horarios/deleteHorario';
+    var horarios = new Horarios("", "", "", action);
+    horarios.deleteHorario(idHorario, action);
+    idHorario = 0;
+}
 
 /** Codigo de Maquinarias */
 var getActividadesM = (id, fun) => {
@@ -341,6 +350,15 @@ var editarMaquinaria1 = () => {
 var restablecer = () => {
     var maquinarias = new Maquinaria("", "", "", "");
     maquinarias.restablecer();
+}
+var deleteMaquinaria = (id) => {
+    idMaquinaria = id;
+}
+var deleteMaquinarias = () => {
+    var action = 'Maquinarias/deleteMaquinaria';
+    var maquinaras = new Maquinaria("", "", "", action);
+    maquinaras.deleteMaquinaria(idMaquinaria, action);
+    idMaquinaria = 0;
 }
 
 /** Codigo de Tarifas */
@@ -387,6 +405,15 @@ var editarTarifa1 = () => {
 var restablecer = () => {
     var tarifa = new Tarifas("", "", "", "", "", "");
     tarifa.restablecer();
+}
+var deleteTarifa = (id) => {
+    idTarifa = id;
+}
+var deleteTarifas = () => {
+    var action = 'Tarifas/deleteTarifa';
+    var tarifa = new Tarifas("", "", "", "", "", action);
+    tarifa.editarTarifa(idTarifa, action);
+    idTarifa = 0;
 }
 
 /** Codigo de Instructores */

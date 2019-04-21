@@ -69,7 +69,7 @@ namespace SistemaAC.ModelsClass
         }
         public List<object[]> filtrarInstructores(int numPagina, string valor, string order)
         {
-            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 3;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 5;
             int can_paginas, pagina = 0, count = 1;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
@@ -80,6 +80,10 @@ namespace SistemaAC.ModelsClass
             numRegistros = instructores.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
+            if ((numRegistros % reg_por_pagina) > 0)
+            {
+                can_paginas += 1;
+            }
             if (valor == "null")
                 query = instructores.Skip(inicio).Take(reg_por_pagina);
             else

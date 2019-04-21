@@ -47,5 +47,9 @@ namespace SistemaAC.Controllers
         {
             return horarioModels.editarHorario(id, dia, hora, actividad, funcion);
         }
+        public List<IdentityError> deleteHorario(int id)
+        {
+            return horarioModels.deleteHorario(id);
+        }
     }
 }

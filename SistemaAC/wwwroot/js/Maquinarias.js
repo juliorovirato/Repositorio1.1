@@ -130,6 +130,18 @@ class Maquinaria {
             });
         });
     }
+    deleteMaquinaria(id, action) {
+        $.post(
+            action,
+            {
+                id
+            },
+            (response) => {
+
+                console.log(response);
+                this.restablecer();
+            });
+    }
     restablecer() {
         document.getElementById("Nombre").value = "";
         document.getElementById("Cantidad").value = "";
@@ -138,5 +150,6 @@ class Maquinaria {
         filtrarMaquinaria(1, "nombre");
         $('#modalDS').modal('hide');
         $('#ModalMaquinaria').modal('hide');
+        $('#ModalDeleteDS').modal('hide');
     }
 }

@@ -61,7 +61,7 @@ namespace SistemaAC.ModelsClass
         }
         public List<object[]> filtrarTarifa(int numPagina, string valor, string order)
         {
-            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 1;
+            int cant, numRegistros = 0, inicio = 0, reg_por_pagina = 5;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
@@ -89,6 +89,10 @@ namespace SistemaAC.ModelsClass
             numRegistros = tarifas.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
+            if ((numRegistros % reg_por_pagina) > 0)
+            {
+                can_paginas += 1;
+            }
             if (valor == "null")
             {
                 query = tarifas.Skip(inicio).Take(reg_por_pagina);
@@ -109,6 +113,9 @@ namespace SistemaAC.ModelsClass
                     "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
                     "<a data-toggle='modal' data-target='#modalES' onclick='editarTarifa(" + item.TarifaID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
+                    "</td>" +
+                    "<td>" +
+                    "<a data-toggle='modal' data-target='#ModalDeleteES' onclick='deleteTarifa(" + item.TarifaID + ")'  class='btn btn-danger'>Eliminar</a>" +
                     "</td>" +
                 "</tr>";
 
@@ -165,6 +172,28 @@ namespace SistemaAC.ModelsClass
                 Description = des
             });
 
+            return errorList;
+        }
+        internal List<IdentityError> deleteTarifa(int id)
+        {
+            var tarifas = context.Tarifas.SingleOrDefault(m => m.TarifaID == id);
+            if (tarifas == null)
+            {
+                code = "0";
+                des = "Not";
+            }
+            else
+            {
+                context.Tarifas.Remove(tarifas);
+                context.SaveChanges();
+                code = "1";
+                des = "Dlete";
+            }
+            errorList.Add(new IdentityError
+            {
+                Code = code,
+                Description = des
+            });
             return errorList;
         }
     }

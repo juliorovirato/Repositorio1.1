@@ -82,6 +82,10 @@ namespace SistemaAC.ModelsClass
             numRegistros = horarios.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
+            if ((numRegistros % reg_por_pagina) > 0)
+            {
+                can_paginas += 1;
+            }
             if (valor == "null")
             {
                 query = horarios.Skip(inicio).Take(reg_por_pagina);
@@ -100,6 +104,9 @@ namespace SistemaAC.ModelsClass
                     "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
                     "<a data-toggle='modal' data-target='#modalCS' onclick='editarHorario(" + item.HorarioID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
+                    "</td>" +
+                    "<td>" +
+                    "<a data-toggle='modal' data-target='#ModalDeleteCS' onclick='deleteHorario(" + item.HorarioID + ")'  class='btn btn-danger'>Eliminar</a>" +
                     "</td>" +
                 "</tr>";
 
@@ -154,6 +161,28 @@ namespace SistemaAC.ModelsClass
                 Description = des
             });
 
+            return errorList;
+        }
+        internal List<IdentityError> deleteHorario(int id)
+        {
+            var horario = context.Horario.SingleOrDefault(m => m.HorarioID == id);
+            if (horario == null)
+            {
+                code = "0";
+                des = "Not";
+            }
+            else
+            {
+                context.Horario.Remove(horario);
+                context.SaveChanges();
+                code = "1";
+                des = "Dlete";
+            }
+            errorList.Add(new IdentityError
+            {
+                Code = code,
+                Description = des
+            });
             return errorList;
         }
     }

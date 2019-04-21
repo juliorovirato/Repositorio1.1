@@ -130,6 +130,18 @@ class Horarios {
             });
         });
     }
+    deleteHorario(id, action) {
+        $.post(
+            action,
+            {
+                id
+            },
+            (response) => {
+
+                console.log(response);
+                this.restablecer();
+            });
+    }
     restablecer() {
         document.getElementById("Dia").value = "";
         document.getElementById("Hora").value = "";
@@ -138,5 +150,6 @@ class Horarios {
         filtrarHorario(1, "dia");
         $('#modalCS').modal('hide');
         $('#ModalHorario').modal('hide');
+        $('#ModalDeleteCS').modal('hide');
     }
 }
