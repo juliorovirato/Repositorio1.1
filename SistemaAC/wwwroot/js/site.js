@@ -450,3 +450,6 @@ var deleteInstructores = () => {
     instructor.deleteInstructor(idInstructor, action);
     idInstructor = 0;
 }
+var restablecerInstructores = () => {
+    instructor.restablecer();
+}

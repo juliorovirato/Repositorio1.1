@@ -87,7 +87,7 @@ namespace SistemaAC.ModelsClass
             if (valor == "null")
                 query = instructores.Skip(inicio).Take(reg_por_pagina);
             else
-                query = instructores.Where(p => p.Documento.StartsWith(valor) || p.Nombres.StartsWith(valor) || p.Apellidos.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
+                query = instructores.Where(p => p.Especialidad.StartsWith(valor) || p.Documento.StartsWith(valor) || p.Nombres.StartsWith(valor) || p.Apellidos.StartsWith(valor) || p.Telefono.StartsWith(valor) || p.Email.StartsWith(valor)).Skip(inicio).Take(reg_por_pagina);
             cant = query.Count();
             foreach (var item in query)
             {
