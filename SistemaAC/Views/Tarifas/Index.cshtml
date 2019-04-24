@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "Tarifas";
 }
-
-<h2>Tarifas</h2>
+<div>
+    <h2><img src="~/images/Tarifa.png" alt="Visual Studio" class="img-responsive" />Tarifas</h2>
+    Estas son nuestras tarifas para ti.
+</div>
 
 <p>
     <a data-toggle='modal' onclick="restablecer();" data-target='#modalES' class='btn btn-info'>Agregar tarifa</a>
@@ -18,6 +20,9 @@
     <thead>
         <tr>
             <th>
+                <a href="#" onclick='filtrarTarifa(1,"actividad")'>Nombre de la actividad</a>
+            </th>
+            <th>
                 <a href="#" onclick='filtrarTarifa(1,"valorEst")'>Valor para estudiantes</a>
             </th>
             <th>
@@ -28,9 +33,6 @@
             </th>
             <th>
                 <a href="#" onclick='filtrarTarifa(1,"valorGrad")'>Valor para graduados</a>
-            </th>
-            <th>
-                <a href="#" onclick='filtrarTarifa(1,"actividad")'>Nombre de la actividad</a>
             </th>
             <th>
                 Opciones
@@ -114,7 +116,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Eliminar estudiante</h4>
+                <h4 class="modal-title">Eliminar tarifa</h4>
             </div>
             <div class="modal-body">
                 <h3 id="titleCurso" class="modal-title"></h3>

@@ -99,9 +99,9 @@ namespace SistemaAC.ModelsClass
             {
                 var actividad = getActividad(item.ActividadesID);
                 dataFilter += "<tr>" +
+                    "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" + item.Dia + "</td>" +
                     "<td>" + item.Hora + "</td>" +
-                    "<td>" + actividad[0].Nombre + "</td>" +
                     "<td>" +
                     "<a data-toggle='modal' data-target='#modalCS' onclick='editarHorario(" + item.HorarioID + ',' + 1 + ")'  class='btn btn-success'>Editar</a>" +
                     "</td>" +

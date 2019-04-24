@@ -2,8 +2,11 @@
 @{
     ViewData["Title"] = "Actividades";
 }
-
-<h2>Actividades</h2>
+<div>
+    <h2><img src="~/images/Actividad.png" alt="Visual Studio" class="img-responsive" />Actividades</h2>
+    Estas son las actividades que te brindamos como gimnasio. Ten en cuenta el estado de la actividad ademas de consultar
+    en los demas apartados sus horarios, y tarifas.
+</div>
 
 <p>
     <a data-toggle='modal' data-target='#modalAC' class='btn btn-info'>Agregar actividad</a>
@@ -20,10 +23,10 @@
                 <a href="#" onclick='filtrarDatos(1, "nombre")'>Nombre de la actividad</a>
             </th>
             <th>
-                <a href="#" onclick='filtrarDatos(1, "can")'>Cantidad de inscritos</a>
+                <a href="#" onclick='filtrarDatos(1, "des")'>Descripcion</a>
             </th>
             <th>
-                <a href="#" onclick='filtrarDatos(1, "des")'>Descripcion</a>
+                <a href="#" onclick='filtrarDatos(1, "can")'>Cantidad de inscritos</a>
             </th>
             <th>
                 <a href="#" onclick='filtrarDatos(1, "estado")'>Estado</a>

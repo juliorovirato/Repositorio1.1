@@ -89,8 +89,8 @@ namespace SistemaAC.ModelsClass
                 }
                 dataFilter += "<tr>" + 
                     "<td>" + item.Nombre + "</td>" +
-                    "<td>" + item.Cantidad + "</td>" +
-                    "<td>" + item.Descripcion + "</td>" + 
+                    "<td>" + item.Descripcion + "</td>" +
+                    "<td>" + item.Cantidad + "</td>" + 
                     "<td>" + Estado + " </td>" + 
                     "<td>" +
                     "<a data-toggle='modal' data-target='#modalAC' onclick = 'editarEstado(" + item.ActividadesID + ',' + 1 + ")' class='btn btn-success'>Editar</a>" + 

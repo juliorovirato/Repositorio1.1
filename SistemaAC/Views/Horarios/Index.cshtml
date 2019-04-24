@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "Horarios";
 }
-
-<h2>Horarios</h2>
+<div>
+    <h2><img src="~/images/Horario.png" alt="Visual Studio" class="img-responsive" />Horarios</h2>
+    Estos son los horarios del gimnasio.
+</div>
 
 <p>
     <a data-toggle='modal' onclick="restablecer();" data-target='#modalCS' class='btn btn-info'>Agregar horario</a>
@@ -18,13 +20,13 @@
     <thead>
         <tr>
             <th>
+                <a href="#" onclick='filtrarHorario(1,"actividad")'>Nombre de la actividad</a>
+            </th>
+            <th>
                 <a href="#" onclick='filtrarHorario(1,"dia")'>Dia</a>
             </th>
             <th>
                 <a href="#" onclick='filtrarHorario(1,"hora")'>Hora</a>
-            </th>
-            <th>
-                <a href="#" onclick='filtrarHorario(1,"actividad")'>Nombre de la actividad</a>
             </th>
             <th>
                 Opciones
