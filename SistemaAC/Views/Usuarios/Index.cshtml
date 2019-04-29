@@ -48,8 +48,8 @@
                 <a class="btn btn-info" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')" data-toggle="modal" data-target="#modalDetalle">Detalles</a>
                 <a class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Eliminar</a>
             </td>
-            @*@inject  SignInManager
-            @if (SignInManager.IsSignedIn(User))
+            @*@inject SignInManager<ApplicationUser> SignInManager
+            @if (SignInManager.IsSignedIn(User.Claims.FirstOrDefault(u => u.Type.Equals("Administrador")).Value))
             {
                 <td>
                     <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Editar</a>
