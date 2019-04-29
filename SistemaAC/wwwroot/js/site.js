@@ -253,6 +253,25 @@ var editarActividad = () => {
     actividad.editarActividad(idActividad, funcion);
 }
 
+var getInstructorActividad = (asignacion, actividad, instructor, fun) => {
+    idActividad = actividad;
+    asignacionID = asignacion;
+    var action = 'Actividades/getActividades';
+    var actividades = new Actividades("", "", "", "", action);
+    actividades.qetActividad(idActividad, fun);
+    var action = 'Actividades/getInstructores';
+    actividades.getInstructores(instructor, fun, action);
+}
+var instructorActividad = () => {
+    let action = 'Actividades/instructorActividad';
+    let instructors = document.getElementById('instructorsActividades');
+    let instructor = instructors.options[instructors.selectedIndex].value;
+    let fecha = document.getElementById("Fecha").value;
+    var actividades = new Actividades("", "", "", "", "");
+    actividades.instructorActividad(asignacionID, idActividad, instructor, fecha, action);
+    asignacionID = 0;
+    idActividad = 0;
+}
 /** Codigo de Horarios */
 var getActividades = (id, fun) => {
     var action = 'Horarios/getActividades';

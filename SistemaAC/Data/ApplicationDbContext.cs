@@ -38,5 +38,7 @@ namespace SistemaAC.Data
         public DbSet<SistemaAC.Models.Instructor> Instructor { get; set; }
 
         public DbSet<SistemaAC.Models.Persona> Persona { get; set; }
+
+        public DbSet<SistemaAC.Models.Asignacion> Asignacion { get; set; }
     }
 }

@@ -44,5 +44,13 @@ namespace SistemaAC.Controllers
         {
             return actividadesModels.guardarActividad(nombre, cantidad, descripcion, estado);
         }
+        public List<Instructor> getInstructores()
+        {
+            return actividadesModels.getInstructores(); 
+        }
+        public List<IdentityError> instructorActividad(List<Asignacion> asignacion)
+        {
+            return actividadesModels.instructorActividad(asignacion);
+        }
     }
 }

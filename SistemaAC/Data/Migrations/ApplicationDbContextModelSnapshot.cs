@@ -198,6 +198,22 @@ namespace SistemaAC.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("SistemaAC.Models.Asignacion", b =>
+                {
+                    b.Property<int>("AsignacionID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ActividadesID");
+
+                    b.Property<DateTime>("Fecha");
+
+                    b.Property<int>("InstructorID");
+
+                    b.HasKey("AsignacionID");
+
+                    b.ToTable("Asignacion");
+                });
+
             modelBuilder.Entity("SistemaAC.Models.Horario", b =>
                 {
                     b.Property<int>("HorarioID")

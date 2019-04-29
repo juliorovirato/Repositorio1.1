@@ -43,7 +43,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
-            @*@inject SignInManager<ApplicationUser> SignInManager
+            <td>
+                <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Editar</a>
+                <a class="btn btn-info" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')" data-toggle="modal" data-target="#modalDetalle">Detalles</a>
+                <a class="btn btn-danger" data-toggle="modal" data-target="#modalEliminar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Eliminar</a>
+            </td>
+            @*@inject  SignInManager
             @if (SignInManager.IsSignedIn(User))
             {
                 <td>

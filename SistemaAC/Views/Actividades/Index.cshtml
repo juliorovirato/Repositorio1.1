@@ -3,7 +3,7 @@
     ViewData["Title"] = "Actividades";
 }
 <div>
-    <h2><img src="~/images/Actividad.png" alt="Visual Studio" class="img-responsive" />Actividades</h2>
+    <h2><img src="~/images/Actividad.png"/>          Actividades</h2>
     Estas son las actividades que te brindamos como gimnasio. Ten en cuenta el estado de la actividad ademas de consultar
     en los demas apartados sus horarios, y tarifas.
 </div>
@@ -102,6 +102,44 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 <button type="button" onclick="editarActividad()" class="btn btn-primary">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            Actividad:
+                        </td>
+                        <td>
+                            <h5 id="actividadTitle"></h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Instructor:
+                        </td>
+                        <td>
+                            <select id='instructorsActividades' class="form-control"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Fecha:
+                        </td>
+                        <td>
+                            <input type="datetime-local" for="Fecha" id="Fecha" placeholder="Fecha" style="width:210px" name="Fecha" class="form-control" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" onclick="instructorActividad()" class="btn btn-primary">Aceptar</button>
             </div>
         </div>
     </div>

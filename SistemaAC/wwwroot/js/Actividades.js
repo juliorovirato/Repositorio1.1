@@ -94,6 +94,9 @@ class Actividades {
                     }
                 }
                 localStorage.setItem("actividad", JSON.stringify(response));
+                if (funcion == 2 || funcion == 3) {
+                    document.getElementById("actividadTitle").innerHTML = response[0].nombre;
+                }
             }
         });
     }
@@ -115,6 +118,51 @@ class Actividades {
             }
         });
     }
+    getInstructores(instructor, fun, action) {
+        var count = 1;
+        $.post(
+            action,
+            {},
+            (response) => {
+                document.getElementById('instructorsActividades').options[0] = new Option("Seleccione un instructor", 0);
+                if (0 < response.length) {
+                    for (var i = 0; i < response.length; i++) {
+                        if (fun == 3) {
+                            document.getElementById('instructorsActividades').options[count] = new Option(response[i].nombres, response[i].id);
+                            count++;
+                        } else {
+                            if (instructor == response[i].id) {
+                                document.getElementById('instructorsActividades').options[0] = new Option(response[i].nombres, response[i].id);
+                                document.getElementById('instructorsActividades').selectedIndex = 0;
+                            } else {
+                                document.getElementById('instructorsActividades').options[count] = new Option(response[i].nombres, response[i].id);
+                                count++;
+                            }
+                        }
+                    }
+                }
+            });
+    }
+    instructorActividad(asignacionID, idActividad, instructorID, fecha, action) {
+        var asignacion = new Array({
+            asignacionID: asignacionID,
+            actividadesID: idActividad,
+            instructorID: instructorID,
+            fecha: fecha
+        });
+        $.post(
+            action,
+            { asignacion },
+            (response) => {
+                console.log(response);
+                if (response[0].code == "Save") {
+                    this.restablecer();
+                } else {
+                    document.getElementById("cursoTitle").innerHTML = response[0].description;
+                }
+
+            });
+    }
     restablecer() {
         document.getElementById("Nombre").value = "";
         document.getElementById("Cantidad").value = "";
@@ -123,6 +171,7 @@ class Actividades {
         document.getElementById("Estado").selectedIndex = 0;
         $('#modalAC').modal('hide');
         $('#ModaEstado').modal('hide');
+        $('.bs-example-modal-sm').modal('hide');
         filtrarDatos(1, "nombre");
     }
 }

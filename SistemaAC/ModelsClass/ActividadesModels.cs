@@ -94,7 +94,10 @@ namespace SistemaAC.ModelsClass
                     "<td>" + Estado + " </td>" + 
                     "<td>" +
                     "<a data-toggle='modal' data-target='#modalAC' onclick = 'editarEstado(" + item.ActividadesID + ',' + 1 + ")' class='btn btn-success'>Editar</a>" + 
-                    "</td>" + 
+                    "</td>" +
+                    "<td>" +
+                    getInstructorActividad(item.ActividadesID) +
+                    "</td>" +
                   "</tr>";
             }
             if (valor == "null")
@@ -170,6 +173,60 @@ namespace SistemaAC.ModelsClass
                 Code = code,
                 Description = des
             });
+            return errorList;
+        }
+        private String getInstructorActividad(int actividadesID)
+        {
+            String boton;
+            var data = context.Asignacion.Where(c => c.ActividadesID == actividadesID).ToList();
+            if (0 < data.Count)
+            {
+                boton = "<a data-toggle='modal' data-target='.bs-example-modal-sm' " +
+                    "onclick = 'getInstructorActividad(" + data[0].AsignacionID + ',' + actividadesID + ',' + data[0].InstructorID + ',' + 2 + ")' " +
+                    "class='btn btn-info'>Actualizar</a>";
+            }
+            else
+            {
+                boton = "<a data-toggle='modal' data-target='.bs-example-modal-sm' " +
+                    "onclick = 'getInstructorActividad(" + 0 + ',' + actividadesID + ',' + 0 + ',' + 3 + ")' " +
+                    "class='btn btn-info'>Asignar</a>";
+            }
+            return boton;
+        }
+        internal List<Instructor> getInstructores()
+        {
+            return context.Instructor.Where(c => c.Estado == true).ToList();
+        }
+        internal List<IdentityError> instructorActividad(List<Asignacion> asig)
+        {
+            var errorList = new List<IdentityError>();
+            string code = "", des = "";
+            var asignacion = new Asignacion
+            {
+                AsignacionID = asig[0].AsignacionID,
+                ActividadesID = asig[0].ActividadesID,
+                InstructorID = asig[0].InstructorID,
+                Fecha = asig[0].Fecha,
+
+            };
+            try
+            {
+                context.Update(asignacion);
+                context.SaveChanges();
+                code = "Save";
+                des = "Save";
+            }
+            catch (Exception ex)
+            {
+                code = "error";
+                des = ex.Message;
+            }
+            errorList.Add(new IdentityError
+            {
+                Code = code,
+                Description = des
+            });
+
             return errorList;
         }
     }
