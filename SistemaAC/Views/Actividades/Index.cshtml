@@ -3,9 +3,9 @@
     ViewData["Title"] = "Actividades";
 }
 <div>
-    <h2><img src="~/images/Actividades_logo.png"/>          Actividades</h2>
-    Estas son las actividades que te brindamos como gimnasio. Ten en cuenta el estado de la actividad ademas de consultar
-    en los demas apartados sus horarios, y tarifas.
+    <h2><img src="~/images/Actividades_logo.png" />          Actividades</h2>
+    <div>Estas son las actividades que te brindamos como gimnasio.</div>
+    <div>Ten en cuenta el estado de la actividad además de consultar en los demás apartados sus horarios, y tarifas.</div>
 </div>
 
 <p>
@@ -23,7 +23,7 @@
                 <a href="#" onclick='filtrarDatos(1, "nombre")'>Nombre de la actividad</a>
             </th>
             <th>
-                <a href="#" onclick='filtrarDatos(1, "des")'>Descripcion</a>
+                <a href="#" onclick='filtrarDatos(1, "des")'>Descripción</a>
             </th>
             <th>
                 <a href="#" onclick='filtrarDatos(1, "can")'>Cantidad de inscritos</a>
@@ -52,7 +52,7 @@
                 <form asp-action="">
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <label for="Nombre" class="col-md-2 control-label">Nombre dela actividad</label>
+                            <label for="Nombre" class="col-md-2 control-label">Nombre de la actividad</label>
                             <div class="col-md-10">
                                 <input form="Nombre" id="Nombre" placeholder="Nombre" name="Nombre" class="form-control" />
                             </div>
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="Descripcion" class="col-md-2 control-label">Descripcion</label>
+                            <label for="Descripcion" class="col-md-2 control-label">Descripción</label>
                             <div class="col-md-10">
                                 <input form="Descripcion" id="Descripcion" placeholder="Descripcion" name="Descripcion" class="form-control" />
                             </div>

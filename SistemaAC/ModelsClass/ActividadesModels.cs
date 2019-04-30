@@ -66,7 +66,7 @@ namespace SistemaAC.ModelsClass
             can_paginas = (numRegistros / reg_por_pagina);
             if ((numRegistros % reg_por_pagina) > 0)
             {
-                numRegistros += 1;
+                can_paginas += 1;
             }
             if (valor == "null")
             {

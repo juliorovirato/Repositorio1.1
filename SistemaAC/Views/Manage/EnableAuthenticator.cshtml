@@ -1,16 +1,16 @@
 ﻿@model EnableAuthenticatorViewModel
 @{
-    ViewData["Title"] = "Habilitar autenticador";
+    ViewData["Title"] = "Habilitar autenticado";
     ViewData.AddActivePage(ManageNavPages.TwoFactorAuthentication);
 }
 
 <h4>@ViewData["Title"]</h4>
 <div>
-    <p>Habilitar el autenticador Para usar una aplicación de autenticador, siga los siguientes pasos:</p>
+    <p>Habilitar el autenticado Para usar una aplicación de autenticado, siga los siguientes pasos:</p>
     <ol class="list">
         <li>
             <p>
-                Descargue una aplicación de autenticador de dos factores como Microsoft Authenticator para
+                Descargue una aplicación de autenticado de dos factores como Microsoft Authenticator para
                 <a href="https://go.microsoft.com/fwlink/?Linkid=825071">Windows Phone</a>,
                 <a href="https://go.microsoft.com/fwlink/?Linkid=825072">Android</a> y
                 <a href="https://go.microsoft.com/fwlink/?Linkid=825073">iOS</a> o
@@ -20,7 +20,7 @@
             </p>
         </li>
         <li>
-            <p>Escanee el código QR o ingrese esta clave <kbd>@Model.SharedKey</kbd> en su aplicación autenticador de dos factores. Los espacios y las minúsculas y las mayúsculas no importan.</p>
+            <p>Escanee el código QR o ingrese esta clave <kbd>@Model.SharedKey</kbd> en su aplicación autenticado de dos factores. Los espacios y las minúsculas y las mayúsculas no importan.</p>
             <div class="alert alert-info">Para habilitar la generación de códigos QR por favor lea nuestra <a href="https://go.microsoft.com/fwlink/?Linkid=852423">documentación</a>.</div>
             <div id="qrCode"></div>
             <div id="qrCodeData" data-url="@Model.AuthenticatorUri"></div>
@@ -34,7 +34,7 @@
                 <div class="col-md-6">
                     <form method="post">
                         <div class="form-group">
-                            <label asp-for="Code" class="control-label">Codigo de verificación</label>
+                            <label asp-for="Code" class="control-label">Código de verificación</label>
                             <input asp-for="Code" class="form-control" autocomplete="off" />
                             <span asp-validation-for="Code" class="text-danger"></span>
                         </div>
