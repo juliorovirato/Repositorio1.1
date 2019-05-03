@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,6 +32,7 @@ namespace SistemaAC.Controllers
         {
             return horarioModels.getActividades();
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> agregarHorario(int id, string dia, string hora, int actividad, string funcion)
         {
             return horarioModels.agregarHorario(id, dia, hora, actividad, funcion);
@@ -43,10 +45,12 @@ namespace SistemaAC.Controllers
         {
             return horarioModels.getHorario(id);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> editarHorario(int id, string dia, string hora, int actividad, int funcion)
         {
             return horarioModels.editarHorario(id, dia, hora, actividad, funcion);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> deleteHorario(int id)
         {
             return horarioModels.deleteHorario(id);

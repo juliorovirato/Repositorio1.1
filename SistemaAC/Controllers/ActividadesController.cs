@@ -37,10 +37,12 @@ namespace SistemaAC.Controllers
         {
             return actividadesModels.getActividades(id);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> editarActividad(int id, string nombre, string cantidad, string descripcion, Boolean estado, int funcion)
         {
             return actividadesModels.editarActividad(id, nombre, cantidad, descripcion, estado, funcion);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> guardarActividad(string nombre, string cantidad, string descripcion, string estado)
         {
             return actividadesModels.guardarActividad(nombre, cantidad, descripcion, estado);
@@ -49,6 +51,7 @@ namespace SistemaAC.Controllers
         {
             return actividadesModels.getInstructores(); 
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> instructorActividad(List<Asignacion> asignacion)
         {
             return actividadesModels.instructorActividad(asignacion);

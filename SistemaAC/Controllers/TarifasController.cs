@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -31,6 +32,7 @@ namespace SistemaAC.Controllers
         {
             return tarifasModels.getActividadesT();
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> agregarTarifa(int id, double valorEst, double valorEmp, double valorFam, double valorGrad, int actividad, string funcion)
         {
             return tarifasModels.agregarTarifa(id, valorEst, valorEmp, valorFam, valorGrad, actividad, funcion);
@@ -43,10 +45,12 @@ namespace SistemaAC.Controllers
         {
             return tarifasModels.getTarifas(id);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> editarTarifa(int id, double valorEst, double valorEmp, double valorFam, double valorGrad, int actividad, int funcion)
         {
             return tarifasModels.editarTarifa(id, valorEst, valorEmp, valorFam, valorGrad, actividad, funcion);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> deleteTarifa(int id)
         {
             return tarifasModels.deleteTarifa(id);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -32,6 +33,7 @@ namespace SistemaAC.Controllers
         {
             return maquinariaModels.getActividadesM();
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> agregarMaquinaria(int id, string nombre, string cantidad, int actividad, string funcion)
         {
             return maquinariaModels.agregarMaquinaria(id, nombre, cantidad, actividad, funcion);
@@ -44,10 +46,12 @@ namespace SistemaAC.Controllers
         {
             return maquinariaModels.getMaquinaria(id);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> editarMaquinaria(int id, string nombre, string cantidad, int actividad, int funcion)
         {
             return maquinariaModels.editarMaquinaria(id, nombre, cantidad, actividad, funcion);
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> deleteMaquinaria(int id)
         {
             return maquinariaModels.deleteMaquinaria(id);

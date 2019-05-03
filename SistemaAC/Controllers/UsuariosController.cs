@@ -32,6 +32,7 @@ namespace SistemaAC.Controllers
         }
 
         // GET: Usuarios
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Index()
         {
             var ID = "";
@@ -55,7 +56,6 @@ namespace SistemaAC.Controllers
             return View(usuario.ToList());
             //return View(await _context.ApplicationUser.ToListAsync());
         }
-
         public async Task<List<Usuario>> GetUsuario(string id)
         {
             List<Usuario> usuario = new List<Usuario>();
@@ -95,7 +95,6 @@ namespace SistemaAC.Controllers
             return rolesLista;
         }
 
-        [Authorize(Roles = "Administrador")]
         public async Task<string> EditUsuario(string id, string userName, string email,
             string phoneNumber, int accessFailedCount, string concurrencyStamp, bool emailConfirmed,
             bool lockoutEnabled, DateTimeOffset lockoutEnd, string normalizedEmail, string normalizedUserName,
@@ -152,7 +151,6 @@ namespace SistemaAC.Controllers
             return resp;
         }
 
-        [Authorize(Roles = "Administrador")]
         public async Task<String> DeleteUsuario(string id)
         {
             var resp = "";
@@ -170,7 +168,6 @@ namespace SistemaAC.Controllers
             return resp;
         }
 
-        [Authorize(Roles = "Administrador")]
         public async Task<String> CreateUsuario(string email,
                 string phoneNumber, string passwordHash, string selectRole, ApplicationUser applicationUser)
         {

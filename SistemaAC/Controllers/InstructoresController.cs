@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,6 +29,7 @@ namespace SistemaAC.Controllers
         {
             return View(await _context.Instructor.ToListAsync()); 
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> guardarInstructor(List<Instructor> response, int funcion)
         {
             return instructor.guardarInstructor(response, funcion); 
@@ -40,6 +42,7 @@ namespace SistemaAC.Controllers
         {
             return instructor.getInstructor(id); 
         }
+        [Authorize(Roles = "Administrador")]
         public List<IdentityError> deleteInstructor(int id)
         {
             return instructor.deleteInstructor(id);
